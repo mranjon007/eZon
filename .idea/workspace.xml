@@ -2,14 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18b61b44-939b-4408-b1ec-2db22bd40a2b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/registration/password_change_done.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/registration/password_change_form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/registration/password_reset_complete.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/registration/password_reset_confirm.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/registration/password_reset_done.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/registration/password_reset_email.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/registration/password_reset_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eZon/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/eZon/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eZon/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/eZon/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/migrations/0002_order_orderprocessingdates_userprofile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/migrations/0003_auto_20190727_0554.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/migrations/0004_auto_20190727_0606.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/migrations/0005_auto_20190727_0626.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +28,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -40,7 +48,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../login21" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -121,7 +129,10 @@
       <workItem from="1564089533113" duration="1155000" />
       <workItem from="1564090696658" duration="11993000" />
       <workItem from="1564184355549" duration="3531000" />
-      <workItem from="1564212990016" duration="1295000" />
+      <workItem from="1564212990016" duration="10761000" />
+      <workItem from="1564268483523" duration="65000" />
+      <workItem from="1564268772467" duration="5186000" />
+      <workItem from="1564411255793" duration="4375000" />
     </task>
     <servers />
   </component>

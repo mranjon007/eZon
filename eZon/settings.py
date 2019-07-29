@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # my_app
     'order_management.apps.OrderManagementConfig',
+    'user.apps.UserConfig',
 ]
 
 MIDDLEWARE = [
@@ -125,7 +126,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-AUTH_USER_MODEL = 'order_management.CustomUser'
+AUTH_USER_MODEL = 'user.CustomUser'
 
 
 LOGIN_REDIRECT_URL = 'home'

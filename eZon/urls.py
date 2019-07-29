@@ -24,5 +24,6 @@ urlpatterns = [
     path('order/', include('order_management.urls')),
     path('', RedirectView.as_view(url='/order/', permanent=True)),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('users/', include('user.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

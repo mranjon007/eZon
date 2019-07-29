@@ -2,15 +2,43 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from user.models import CustomUser
 
 
-class CustomUser(AbstractUser):
-    phone_number = models.CharField(max_length=14, unique=True, null=True)
-    email = models.EmailField('email address', unique=True)
-    name = models.CharField(max_length=60)
+# class CustomUser(AbstractUser):
+#     phone_number = models.CharField(max_length=14, unique=True, null=True)
+#     email = models.EmailField('email address', unique=True)
+#     name = models.CharField(max_length=60)
+#
+#     USERNAME_FIELD = 'email'
+#     REQUIRED_FIELDS = []
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+ORDER_STATUS = (
+    (0, 'Request Price'),
+    (1, 'Query Result Submitted'),
+    (2, 'Place Order'),
+    (3, 'product purchased'),
+    (4, 'product in shipping'),
+    (5, 'product arrived in eZon office'),
+    (6, 'product delivered to the customer'),
+    (7, 'order completed'),
+    (8, 'order canceled'),
+    (9, 'order refunded'),
+    (10, 'product defected'),
+)
+
+COMPANY_LISTING = (
+    (0, 'Amazon'),
+    (1, 'Ebay'),
+    (2, 'Walmart'),
+    (3, 'Others')
+)
+
+COUNTRY_LIST = (
+    (0, 'USA'),
+    (1, 'UK'),
+    (2, 'Others')
+)
 
 
 class Order(models.Model):
@@ -29,20 +57,13 @@ class Order(models.Model):
                                               help_text='Service fee for the product',
                                               default=0)
 
-    ORDER_STATUS = (
-        (0, 'user query a request'),
-        (1, 'user query result submitted'),
-        (2, 'user place the order'),
-        (3, 'product purchased'),
-        (4, 'product in shipping'),
-        (5, 'product arrived in eZon office'),
-        (6, 'product delivered to the customer'),
-        (7, 'order completed')
-    )
-
-    status = models.IntegerField(max_length=1, choices=ORDER_STATUS, default=0, help_text='order status')
+    status = models.IntegerField(choices=ORDER_STATUS, default=0, help_text='order status')
     is_payment_complete = models.BooleanField(default=False)
     probable_product_handover_date = models.DateField(blank=True, null=True)
+
+    product_company = models.IntegerField(choices=COMPANY_LISTING, blank=True, null=True)
+
+    product_country = models.IntegerField(choices=COUNTRY_LIST, blank=True, null=True)
     # product_category should be added later
 
     class Meta:
@@ -55,27 +76,18 @@ class Order(models.Model):
         return reverse('order-detail', args=[str(self.id)])
 
     def get_total_price(self):
-        if self.product_price==None or self.product_tax == None or self.product_service_fee == None:
+        if self.product_price is None or self.product_tax is None or self.product_service_fee is None:
             return "Product price is not updated"
         else:
             return self.product_price + self.product_service_fee + self.product_tax
 
 
-class OrderProcessingDates(models.Model):
-    oder = models.OneToOneField(Order, on_delete=models.CASCADE, null=True)
+class OrderProcessingDate(models.Model):
+    oder = models.OneToOneField(Order, on_delete=models.CASCADE)
 
-    ORDER_STATUS = (
-        (0, 'user query a request'),
-        (1, 'user query result submitted'),
-        (2, 'user place the order'),
-        (3, 'product purchased'),
-        (4, 'product in shipping'),
-        (5, 'product arrived in eZon office'),
-        (6, 'product delivered to the customer'),
-        (7, 'order completed')
-    )
-    status = models.IntegerField(max_length=1, choices=ORDER_STATUS, default=0, help_text= 'Oder status')
+    status = models.IntegerField(choices=ORDER_STATUS, default=0, help_text='Oder status')
     date = models.DateField(auto_now=True)
+    notes = models.TextField(max_length=500)
 
     class Meta:
         ordering = ['date']
@@ -84,7 +96,22 @@ class OrderProcessingDates(models.Model):
         return str(self.id)
 
     def get_absolute_url(self):
-        return reverse('orderProcessingDates-detail', args=[str(self.id)])
+        return reverse('orderProcessingDate-detail', args=[str(self.id)])
+
+
+class DeliveryInfo(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    provider_name = models.CharField(max_length=100, default='e-courier')
+    note = models.TextField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        ordering = []
+
+    def __str__(self):
+        return str(self.order.id + " | " + self.provider_name)
+
+    def get_absolute_url(self):
+        return reverse('DeliveryProvider-detail', args=[str(self.id)])
 
 
 class UserProfile(models.Model):
