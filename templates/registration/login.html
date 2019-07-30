@@ -1,7 +1,12 @@
-<!-- templates/registration/login.html -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
 <h2>Login</h2>
 <form method="post">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ form|crispy }}
   <button type="submit">Login</button>
 </form>
+<p>Not registered yet. Then creat an <a href="{% url 'signup' %}">account</a></p>
+{% endblock %}

@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     # my_app
     'order_management.apps.OrderManagementConfig',
     'user.apps.UserConfig',
+
+    # 3rd party app
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -134,4 +137,4 @@ LOGOUT_REDIRECT_URL = 'home'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
