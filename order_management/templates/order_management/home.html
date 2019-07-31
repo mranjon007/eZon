@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Home Page</h1>
-    {% if user.is_authenticated %}
-        <p>Hi {{ user.username }}
-        <p><a href="{% url 'logout' %}">Log out</a></p>
-        {% else %}
-        <p><a href="{% url 'signup' %}">Sign Up</a></p>
-        <p><a href="{% url 'login' %}">Log In </a></p>
-    {% endif %}
+    <h1>Home Page</h1>
+
+    {% load crispy_forms_tags %}
+
+    <h2>Check your Desire Product Price</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit">Submit</button>
+    </form>
+    <h3 STYLE="color:red">{{ message }}</h3>
+
 {% endblock %}

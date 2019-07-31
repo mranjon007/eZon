@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('ezon_admin/', admin.site.urls),  # this_url_name should be changed in Production
     path('order/', include('order_management.urls')),
     path('', RedirectView.as_view(url='/order/', permanent=True)),
     path('accounts/', include('django.contrib.auth.urls')),

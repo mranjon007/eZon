@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from user.models import CustomUser
 
-
 # class CustomUser(AbstractUser):
 #     phone_number = models.CharField(max_length=14, unique=True, null=True)
 #     email = models.EmailField('email address', unique=True)
@@ -45,12 +44,16 @@ class Order(models.Model):
     product_url = models.URLField(max_length=300)
     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL,
                              null=True, blank=True)
-    note = models.TextField(max_length=1000,
-                            help_text="Please provide a detail description(size, color,..etc) "
-                            "for your product", null=True, blank=True)
+    customer_note = models.TextField(max_length=1000,
+                                     help_text="Please provide a detail description(size, color,..etc) "
+                                               "for your product", null=True, blank=True)
+    admin_note = models.TextField(max_length=1000,
+                                  help_text="Please provide a detail description(size, color,..etc) "
+                                            "for your product", null=True, blank=True)
+
     product_price = models.DecimalField(max_digits=10, decimal_places=3,
                                         help_text='Origin Amazon product price',
-                                        default=0)
+                                        default=0, blank=True, null=True)
     product_tax = models.DecimalField(max_digits=10, decimal_places=3,
                                       help_text='Tax for the product', default=0)
     product_service_fee = models.DecimalField(max_digits=10, decimal_places=3,
@@ -64,6 +67,7 @@ class Order(models.Model):
     product_company = models.IntegerField(choices=COMPANY_LISTING, blank=True, null=True)
 
     product_country = models.IntegerField(choices=COUNTRY_LIST, blank=True, null=True)
+
     # product_category should be added later
 
     class Meta:

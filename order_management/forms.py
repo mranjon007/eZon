@@ -1,19 +1,14 @@
 from django import forms
-# from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-# from .models import CustomUser
-#
-#
-# class CustomUserCreationForm(UserCreationForm):
-#
-#     class Meta(UserCreationForm):
-#         model = CustomUser
-#         fields = ('name', 'email', 'phone_number')
-#         USERNAME_FIELD = 'email'
-#         REQUIRED_FIELDS = []
-#
-#
-# class CustomUserChangeForm(UserChangeForm):
-#
-#     class Meta(UserChangeForm):
-#         model = CustomUser
-#         fields = UserChangeForm.Meta.fields
+
+
+COMPANY_LISTING = (
+    (0, 'Amazon'),
+    (1, 'Ebay'),
+    (2, 'Walmart'),
+    (3, 'Others')
+)
+
+
+class PriceQueryForm(forms.Form):
+    product_url = forms.URLField(max_length=300, required=True, initial='https://')
+    product_company = forms.ChoiceField(choices=COMPANY_LISTING, required=False)
