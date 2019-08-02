@@ -2,6 +2,8 @@ from django.urls import path
 from .views import (
     homepage,
     AdminDashBoardView,
+    PriceQueryListView,
+    update_price_query,
 )
 
 
@@ -9,7 +11,8 @@ urlpatterns = [
     path('', homepage, name='home'),
     path('admin_dashboard/', AdminDashBoardView.as_view(), name='admin-dashboard'),
     # future
-    # path('price_query_list/', name='price-query-list'),
+    path('price_query_list/', PriceQueryListView.as_view(), name='price-query-list'),
+    path('price_query_update/<pk>/', update_price_query, name='price-query-update')
     # path('price_query_result_submitted_list/', name='price query'),
     # path('placed_order_list', name='place-order-list'),
     # path('product_purchase_order_list', name='product-purchase-order-list'),

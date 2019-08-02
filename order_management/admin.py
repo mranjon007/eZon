@@ -30,12 +30,12 @@ from .models import (
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('get_total_price', )
+    pass
 
 
 @admin.register(OrderProcessingDate)
 class OrderProcessingDatesAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'date')
 
 
 @admin.register(UserProfile)

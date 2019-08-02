@@ -3,40 +3,47 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from user.models import CustomUser
+import datetime
+from django.utils import timezone
 
-# class CustomUser(AbstractUser):
-#     phone_number = models.CharField(max_length=14, unique=True, null=True)
-#     email = models.EmailField('email address', unique=True)
-#     name = models.CharField(max_length=60)
-#
-#     USERNAME_FIELD = 'email'
-#     REQUIRED_FIELDS = []
 
 ORDER_STATUS = (
-    (0, 'Request Price'),
-    (1, 'Query Result Submitted'),
-    (2, 'Place Order'),
-    (3, 'product purchased'),
-    (4, 'product in shipping'),
-    (5, 'product arrived in eZon office'),
-    (6, 'product delivered to the customer'),
-    (7, 'order completed'),
-    (8, 'order canceled'),
-    (9, 'order refunded'),
-    (10, 'product defected'),
+    ('price_query', 'Price Query'),
+    ('query_result_submitted', 'Query Result Submitted'),
+    ('placed_order', 'Placed Order'),
+    ('product_purchased', 'product purchased'),
+    ('product_in_shipping', 'product in shipping'),
+    ('product_arrived_in_ezon_office', 'product arrived in eZon office'),
+    ('product_delivered_to_the_customer', 'product delivered to the customer'),
+    ('order_completed', 'order completed'),
+    ('order_canceled', 'order canceled'),
+    ('order_refunded', 'order refunded'),
+    ('order_defected', 'product defected'),
 )
 
 COMPANY_LISTING = (
-    (0, 'Amazon'),
-    (1, 'Ebay'),
-    (2, 'Walmart'),
-    (3, 'Others')
+    ('amazon', 'Amazon'),
+    ('ebay', 'Ebay'),
+    ('walmart', 'Walmart'),
+    ('others', 'Others'),
 )
 
 COUNTRY_LIST = (
-    (0, 'USA'),
-    (1, 'UK'),
-    (2, 'Others')
+    ('usa', 'USA'),
+    ('uk', 'UK'),
+    ('others', 'Others')
+)
+
+PAYMENT_STATUS = (
+    ('partially_paid', 'Partially Paid'),
+    ('full_paid', 'Full Paid'),
+)
+
+PAYMENT_WAY = (
+    ('cash_on_delivery', 'Cash On Delivery'),
+    ('bkash', 'Bkash'),
+    ('card', 'Card'),
+    ('bank', 'Bank'),
 )
 
 
@@ -60,21 +67,23 @@ class Order(models.Model):
                                               help_text='Service fee for the product',
                                               default=0)
 
-    status = models.IntegerField(choices=ORDER_STATUS, default=0, help_text='order status')
     is_payment_complete = models.BooleanField(default=False)
     probable_product_handover_date = models.DateField(blank=True, null=True)
 
-    product_company = models.IntegerField(choices=COMPANY_LISTING, blank=True, null=True)
+    product_company = models.CharField(max_length=50, choices=COMPANY_LISTING, default='amazon', blank=True, null=True)
 
-    product_country = models.IntegerField(choices=COUNTRY_LIST, blank=True, null=True)
+    product_country = models.CharField(max_length=50, choices=COUNTRY_LIST, default='usa', blank=True, null=True)
 
     # product_category should be added later
 
     class Meta:
-        ordering = ['probable_product_handover_date', 'status']
+        ordering = ['id']
+
+    def get_order_number(self):
+        return str(self.id + 1000)  # 1000 + id number
 
     def __str__(self):
-        return str(self.id) + " (" + self.product_url[:50] + ")"
+        return self.get_order_number()
 
     def get_absolute_url(self):
         return reverse('order-detail', args=[str(self.id)])
@@ -87,14 +96,14 @@ class Order(models.Model):
 
 
 class OrderProcessingDate(models.Model):
-    oder = models.OneToOneField(Order, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name= 'order_status_dates')
 
-    status = models.IntegerField(choices=ORDER_STATUS, default=0, help_text='Oder status')
-    date = models.DateField(auto_now=True)
-    notes = models.TextField(max_length=500)
+    status = models.CharField(max_length=50, choices=ORDER_STATUS, default='price_query', help_text='Order status')
+    date = models.DateTimeField(null=False, default=timezone.now)
+    # notes = models.TextField(max_length=500, blank=True, null=True)
 
     class Meta:
-        ordering = ['date']
+        ordering = ['-date']
 
     def __str__(self):
         return str(self.id)
@@ -104,7 +113,7 @@ class OrderProcessingDate(models.Model):
 
 
 class DeliveryInfo(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='delivery_info')
     provider_name = models.CharField(max_length=100, default='e-courier')
     note = models.TextField(max_length=500, blank=True, null=True)
 
@@ -116,6 +125,13 @@ class DeliveryInfo(models.Model):
 
     def get_absolute_url(self):
         return reverse('DeliveryProvider-detail', args=[str(self.id)])
+
+
+class PaymentDates(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, related_name='payment_dates')
+    status = models.CharField(max_length=40, choices=PAYMENT_STATUS)
+    payment_way = models.CharField(max_length=40, choices=PAYMENT_WAY)
+    Date = models.DateTimeField()
 
 
 class UserProfile(models.Model):
