@@ -7,7 +7,6 @@ from .models import (
     # CustomUser,
     Order,
     OrderProcessingDate,
-    UserProfile,
     DeliveryInfo,
 )
 
@@ -36,12 +35,6 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(OrderProcessingDate)
 class OrderProcessingDatesAdmin(admin.ModelAdmin):
     list_display = ('id', 'date')
-
-
-@admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
-    pass
-
 
 @admin.register(DeliveryInfo)
 class DeliveryInfoAdmin(admin.ModelAdmin):

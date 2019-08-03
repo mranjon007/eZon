@@ -35,13 +35,14 @@ COUNTRY_LIST = (
 )
 
 PAYMENT_STATUS = (
+    ('not_paid', 'Not Paid'),
     ('partially_paid', 'Partially Paid'),
     ('full_paid', 'Full Paid'),
 )
 
 PAYMENT_WAY = (
     ('cash_on_delivery', 'Cash On Delivery'),
-    ('bkash', 'Bkash'),
+    ('bkash', 'bKash'),
     ('card', 'Card'),
     ('bank', 'Bank'),
 )
@@ -67,7 +68,7 @@ class Order(models.Model):
                                               help_text='Service fee for the product',
                                               default=0)
 
-    is_payment_complete = models.BooleanField(default=False)
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS, default='not_paid')
     probable_product_handover_date = models.DateField(blank=True, null=True)
 
     product_company = models.CharField(max_length=50, choices=COMPANY_LISTING, default='amazon', blank=True, null=True)
@@ -96,7 +97,7 @@ class Order(models.Model):
 
 
 class OrderProcessingDate(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name= 'order_status_dates')
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='order_status_dates')
 
     status = models.CharField(max_length=50, choices=ORDER_STATUS, default='price_query', help_text='Order status')
     date = models.DateTimeField(null=False, default=timezone.now)
@@ -129,20 +130,16 @@ class DeliveryInfo(models.Model):
 
 class PaymentDates(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, related_name='payment_dates')
-    status = models.CharField(max_length=40, choices=PAYMENT_STATUS)
     payment_way = models.CharField(max_length=40, choices=PAYMENT_WAY)
     Date = models.DateTimeField()
 
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-    address = models.CharField(max_length=300, blank=True, null=True)
-
     class Meta:
-        ordering = []
+        ordering = ['order']
 
     def __str__(self):
-        return str(self.user.name)
+        return str(self.id)
 
     def get_absolute_url(self):
-        return reverse('userProfile-detail', args=[str(self.id)])
+        return reverse('paymentDates-detail', args=[str(self.id)])
+
+

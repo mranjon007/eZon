@@ -4,6 +4,8 @@ from .views import (
     AdminDashBoardView,
     PriceQueryListView,
     update_price_query,
+    place_order_form_view,
+    PlacedOrderListView,
 )
 
 
@@ -12,9 +14,11 @@ urlpatterns = [
     path('admin_dashboard/', AdminDashBoardView.as_view(), name='admin-dashboard'),
     # future
     path('price_query_list/', PriceQueryListView.as_view(), name='price-query-list'),
-    path('price_query_update/<pk>/', update_price_query, name='price-query-update')
+    path('price_query_update/<pk>/', update_price_query, name='price-query-update'),
+    path('place_order/', place_order_form_view, name='place-order-form'),
+    path('placed_order_list/', PlacedOrderListView.as_view(), name='placed-order-list'),
+
     # path('price_query_result_submitted_list/', name='price query'),
-    # path('placed_order_list', name='place-order-list'),
     # path('product_purchase_order_list', name='product-purchase-order-list'),
     # path('product_purchased_complete_list', name='product-purchased-complete-list'),
     # path('order_in_shipping_list/', name='order-in-shipping-list'),

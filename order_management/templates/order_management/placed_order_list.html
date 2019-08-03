@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="h2">Placed Order List</h2>
+    {% if orderprocessingdate_list %}
+    <table class="table table">
+      <thead>
+        <tr>
+          <th scope="col">order Number</th>
+          <th scope="col">Date</th>
+          <th scope="col">Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for orderprocessingdate in orderprocessingdate_list %}
+        <tr>
+            <td scope="row">{{ orderprocessingdate.order.get_order_number }}</td>
+            <td scope="row">{{ orderprocessingdate.date}}</td>
+            <td scope="row"><a href="{% url 'price-query-update' pk=orderprocessingdate.order.id %}" class="btn btn-primary">update</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+        <h3 class="h3">There is no placed order available now.</h3>
+    {% endif %}
+{% endblock %}
