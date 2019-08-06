@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2 class="h2">Placed Order List</h2>
+    <h2 class="h2">Purchase Canceled List</h2>
     {% if order_list %}
     <table class="table table">
       <thead>
         <tr>
           <th scope="col">order Number</th>
-          <th scope="col">Send to Purchase Department</th>
+          <th scope="col">Update</th>
         </tr>
       </thead>
       <tbody>
         {% for order in order_list %}
         <tr>
             <td scope="row">{{ order.get_order_number }}</td>
-            <td scope="row"><a href="" class="btn btn-primary">Send to purchased Department</a></td>
+            <td scope="row"><a href="" class="btn btn-primary">Send to purchase department</a></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     {% else %}
-        <h3 class="h3">There is no placed order available now.</h3>
+        <h3 class="h3">There is no purchase canceled order available now.</h3>
     {% endif %}
 {% endblock %}

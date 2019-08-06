@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="h2">Product Purchase Request</h2>
+
+    {% if order_list %}
+        {% for order in order_list %}
+        <h3>Order Number: {{ order.get_order_number }}</h3>
+
+        <p><strong>Product Url:</strong>
+            <a href="{{ order.product_url }}">{{ order.product_url }}</a>
+        </p>
+        <p><strong>admin note:</strong> {{ order.admin_note }}</p>
+        <a href="{% url 'product-purchase' order_id=order.id  %}" class="btn btn-primary">Purchase</a>
+        <a href="{% url 'purchase-cancel' order_id=order.id  %}" class="btn btn-primary">Cancel</a>
+        {% endfor %}
+
+    {% else %}
+        <h3>There is no purchase request right now.</h3>
+    {% endif %}
+{% endblock %}

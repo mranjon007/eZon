@@ -5,6 +5,9 @@ from .models import (
     PAYMENT_STATUS,
     PAYMENT_WAY
 )
+from user.models import CustomUser
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
 
 class PriceQueryForm(forms.Form):
@@ -33,3 +36,21 @@ class PlaceOrderForm(forms.Form):
     customer_email_address = forms.CharField(max_length=80)
     customer_address = forms.CharField(max_length=300)
     customer_note = forms.CharField(max_length=1000, widget=forms.Textarea, required=False)
+
+    # def clean_customer_email_address(self):
+    #     email = self.cleaned_data['customer_email_address']
+    #     if CustomUser.objects.get(email=email):
+    #         raise ValidationError(_("this email is already exist"))
+    #     # Remember to always return the cleaned data.
+    #     return email
+    #
+    # def clean_customer_phone_number(self):
+    #     phone_number = self.cleaned_data['customer_phone_number']
+    #     if CustomUser.objects.filter(phone_number=phone_number):
+    #         raise ValidationError(_('this phone number is already exist'))
+
+
+class ProductPurchaseCancelFrom(forms.Form):
+    note = forms.CharField(label='Cancel Note', max_length=400, required=True, help_text='if you cancel \
+                                                    the purchase then must provide the reason '
+                                                                     'for canceling')

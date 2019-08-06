@@ -9,16 +9,18 @@ from django.utils import timezone
 
 ORDER_STATUS = (
     ('price_query', 'Price Query'),
-    ('query_result_submitted', 'Query Result Submitted'),
+    ('price_query_submitted', 'Price Query Submitted'),
     ('placed_order', 'Placed Order'),
+    ('product_purchase_request', 'Product Purchase Request'),
     ('product_purchased', 'product purchased'),
-    ('product_in_shipping', 'product in shipping'),
-    ('product_arrived_in_ezon_office', 'product arrived in eZon office'),
-    ('product_delivered_to_the_customer', 'product delivered to the customer'),
-    ('order_completed', 'order completed'),
-    ('order_canceled', 'order canceled'),
-    ('order_refunded', 'order refunded'),
-    ('order_defected', 'product defected'),
+    ('purchase_canceled', 'Purchase Canceled'),
+    ('product_in_shipping', 'Product in Shipping'),
+    ('product_arrived_in_ezon_office', 'Product Arrived In eZon Office'),
+    ('product_delivered_to_the_customer', 'Product Delivered To The Customer'),
+    ('order_completed', 'Order Completed'),
+    ('order_canceled', 'Order Canceled'),
+    ('order_refunded', 'Order Refunded'),
+    ('order_defected', 'Product Defected'),
 )
 
 COMPANY_LISTING = (
@@ -61,19 +63,19 @@ class Order(models.Model):
 
     product_price = models.DecimalField(max_digits=10, decimal_places=3,
                                         help_text='Origin Amazon product price',
-                                        default=0, blank=True, null=True)
+                                        default=0)
     product_tax = models.DecimalField(max_digits=10, decimal_places=3,
                                       help_text='Tax for the product', default=0)
     product_service_fee = models.DecimalField(max_digits=10, decimal_places=3,
                                               help_text='Service fee for the product',
                                               default=0)
-
+    status = models.CharField(max_length=50, choices=ORDER_STATUS, default='price_query', help_text='Order status')
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS, default='not_paid')
     probable_product_handover_date = models.DateField(blank=True, null=True)
 
-    product_company = models.CharField(max_length=50, choices=COMPANY_LISTING, default='amazon', blank=True, null=True)
+    product_company = models.CharField(max_length=50, choices=COMPANY_LISTING, default='amazon',)
 
-    product_country = models.CharField(max_length=50, choices=COUNTRY_LIST, default='usa', blank=True, null=True)
+    product_country = models.CharField(max_length=50, choices=COUNTRY_LIST, default='usa')
 
     # product_category should be added later
 
@@ -84,7 +86,7 @@ class Order(models.Model):
         return str(self.id + 1000)  # 1000 + id number
 
     def __str__(self):
-        return self.get_order_number()
+        return str(self.id)
 
     def get_absolute_url(self):
         return reverse('order-detail', args=[str(self.id)])
@@ -97,11 +99,11 @@ class Order(models.Model):
 
 
 class OrderProcessingDate(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='order_status_dates')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_status_dates')
 
     status = models.CharField(max_length=50, choices=ORDER_STATUS, default='price_query', help_text='Order status')
     date = models.DateTimeField(null=False, default=timezone.now)
-    # notes = models.TextField(max_length=500, blank=True, null=True)
+    note = models.TextField(max_length=400, blank=True, null=True)
 
     class Meta:
         ordering = ['-date']
@@ -141,5 +143,4 @@ class PaymentDates(models.Model):
 
     def get_absolute_url(self):
         return reverse('paymentDates-detail', args=[str(self.id)])
-
 

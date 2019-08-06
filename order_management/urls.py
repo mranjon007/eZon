@@ -4,8 +4,14 @@ from .views import (
     AdminDashBoardView,
     PriceQueryListView,
     update_price_query,
+    PriceQuerySubmittedList,
     place_order_form_view,
     PlacedOrderListView,
+    ProductPurchaseRequestListView,
+    product_purchase_view,
+    purchase_cancel_view,
+    PurchasedProductListView,
+    PurchaseCanceledListView,
 )
 
 
@@ -15,16 +21,12 @@ urlpatterns = [
     # future
     path('price_query_list/', PriceQueryListView.as_view(), name='price-query-list'),
     path('price_query_update/<pk>/', update_price_query, name='price-query-update'),
+    path('price_query_submitted_list/', PriceQuerySubmittedList.as_view(), name='price-query-submitted-list'),
     path('place_order/', place_order_form_view, name='place-order-form'),
     path('placed_order_list/', PlacedOrderListView.as_view(), name='placed-order-list'),
-
-    # path('price_query_result_submitted_list/', name='price query'),
-    # path('product_purchase_order_list', name='product-purchase-order-list'),
-    # path('product_purchased_complete_list', name='product-purchased-complete-list'),
-    # path('order_in_shipping_list/', name='order-in-shipping-list'),
-    # path('product_received_from_shipping_list/', name='order-received-from-shipping-list'),
-    # path('product_sent_to_customer_list/', name='product-sent-to-customer-list'),
-    # path('completed_order_list', name='completed-order-list'),
-    # path('canceled_order_list', name='canceled-order-list'),
-    # path('refunded_order_list', name='refunded-order-list'),
+    path('product_purchase_request_list/', ProductPurchaseRequestListView.as_view(), name='product-purchase-request-list'),
+    path('product_purchase/<int:order_id>/', product_purchase_view, name='product-purchase'),
+    path('purchase_cancel/<int:order_id>/', purchase_cancel_view, name='purchase-cancel'),
+    path('purchased_product_list/', PurchasedProductListView.as_view(), name='purchased-product-list'),
+    path('purchase_canceled_list/', PurchaseCanceledListView.as_view(), name='purchase-canceled-list')
 ]
