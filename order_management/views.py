@@ -311,4 +311,56 @@ class PurchaseCanceledListView(IsStaffMixin, ListView):
         return context
 
 
+@staff_member_required
+def purchased_product_send_to_shipping_view(request, order_id):
+    context = {}
+    order = Order.objects.get(id=order_id)
+    order.status = 'product_in_shipping'
+    order.save()
+    OrderProcessingDate.objects.create(order=order,
+                                       status='product_in_shipping',
+                                       )
+    return HttpResponseRedirect(reverse('purchased-product-list'))
+
+
+class ProductInShippingListView(IsStaffMixin, ListView):
+    model = Order
+    template_name = 'order_management/product_in_shipping_list.html'
+
+    def get_queryset(self):
+        return Order.objects.filter(status='product_in_shipping')
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(ProductInShippingListView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['some_data'] = 'This is just some data'
+        return context
+
+
+@staff_member_required
+def shipping_to_arrived_in_bangladesh_view(request, order_id):
+    context = {}
+    order = Order.objects.get(id=order_id)
+    order.status = 'product_arrived_in_ezon_office'
+    order.save()
+    OrderProcessingDate.objects.create(order=order,
+                                       status='product_arrived_in_ezon_office',
+                                       )
+    return HttpResponseRedirect(reverse('product-in-shipping-list'))
+
+
+class ArrivedProductListView(IsStaffMixin, ListView):
+    model = Order
+    template_name = 'order_management/product_arrived_in_bangladesh_list.html'
+
+    def get_queryset(self):
+        return Order.objects.filter(status='product_in_shipping')
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(ArrivedProductListView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['some_data'] = 'This is just some data'
+        return context
 

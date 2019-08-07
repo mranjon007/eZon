@@ -12,6 +12,10 @@ from .views import (
     purchase_cancel_view,
     PurchasedProductListView,
     PurchaseCanceledListView,
+    purchased_product_send_to_shipping_view,
+    ProductInShippingListView,
+    shipping_to_arrived_in_bangladesh_view,
+    ArrivedProductListView,
 )
 
 
@@ -28,5 +32,9 @@ urlpatterns = [
     path('product_purchase/<int:order_id>/', product_purchase_view, name='product-purchase'),
     path('purchase_cancel/<int:order_id>/', purchase_cancel_view, name='purchase-cancel'),
     path('purchased_product_list/', PurchasedProductListView.as_view(), name='purchased-product-list'),
-    path('purchase_canceled_list/', PurchaseCanceledListView.as_view(), name='purchase-canceled-list')
+    path('purchase_canceled_list/', PurchaseCanceledListView.as_view(), name='purchase-canceled-list'),
+    path('purchased_product_send_to_shipping/<int:order_id>/', purchased_product_send_to_shipping_view, name='purchased-product-send-to-shipping'),
+    path('product_in_shipping_list/', ProductInShippingListView.as_view(), name='product-in-shipping-list'),
+    path('shipping_to_arrived_in_bangladesh/<int:order_id>/', shipping_to_arrived_in_bangladesh_view, name='shipping-to-arrived-in-bangladesh'),
+    path('arrived_product_list/', ArrivedProductListView.as_view(), name='arrived-product-list'),
 ]
