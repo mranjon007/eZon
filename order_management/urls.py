@@ -16,13 +16,15 @@ from .views import (
     ProductInShippingListView,
     shipping_to_arrived_in_bangladesh_view,
     ArrivedProductListView,
+    product_send_to_delivery_form_view,
+    ProductSendToDeliveryPersonList,
 )
 
 
 urlpatterns = [
     path('', homepage, name='home'),
     path('admin_dashboard/', AdminDashBoardView.as_view(), name='admin-dashboard'),
-    # future
+
     path('price_query_list/', PriceQueryListView.as_view(), name='price-query-list'),
     path('price_query_update/<pk>/', update_price_query, name='price-query-update'),
     path('price_query_submitted_list/', PriceQuerySubmittedList.as_view(), name='price-query-submitted-list'),
@@ -37,4 +39,9 @@ urlpatterns = [
     path('product_in_shipping_list/', ProductInShippingListView.as_view(), name='product-in-shipping-list'),
     path('shipping_to_arrived_in_bangladesh/<int:order_id>/', shipping_to_arrived_in_bangladesh_view, name='shipping-to-arrived-in-bangladesh'),
     path('arrived_product_list/', ArrivedProductListView.as_view(), name='arrived-product-list'),
+    path('arrived_product_send_to_delivery/<int:order_id>/', product_send_to_delivery_form_view, name='arrived-product-send-to-delivery'),
+    path('product_send_to_delivery_person_list/', ProductSendToDeliveryPersonList.as_view(), name='product-send-to-delivery-person-list')
+
+    #path('arrived_product_cancel_delivery/<int:order_id>/'),
+    #path('canceled_after_arrive_list/')
 ]

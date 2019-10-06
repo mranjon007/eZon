@@ -14,6 +14,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .models import (
     Order,
     OrderProcessingDate,
+    DeliveryInfo,
     COMPANY_LISTING,
     COUNTRY_LIST,
     ORDER_STATUS,
@@ -26,6 +27,7 @@ from .forms import (
     PriceQueryUpdateForm,
     PlaceOrderForm,
     ProductPurchaseCancelFrom,
+    ProductSendToDeliveryForm,
 )
 
 from .CustomMixin import (
@@ -73,10 +75,10 @@ def homepage(request):
 class AdminDashBoardView(LoginRequiredMixin, IsStaffMixin, TemplateView):
     template_name = 'order_management/admin_dashboard.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context['latest_articles'] = Article.objects.all()[:5]
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(AdminDashBoardView).get_context_data(**kwargs)
+    #     context['latest_articles'] = Article.objects.all()[:5]
+    #     return context
 
 
 class PriceQueryListView(IsStaffMixin, ListView):
@@ -355,7 +357,7 @@ class ArrivedProductListView(IsStaffMixin, ListView):
     template_name = 'order_management/product_arrived_in_bangladesh_list.html'
 
     def get_queryset(self):
-        return Order.objects.filter(status='product_in_shipping')
+        return Order.objects.filter(status='product_arrived_in_ezon_office')
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context
@@ -364,3 +366,45 @@ class ArrivedProductListView(IsStaffMixin, ListView):
         context['some_data'] = 'This is just some data'
         return context
 
+
+##################
+@staff_member_required
+def product_send_to_delivery_form_view(request, order_id):
+    context = {}
+    order = Order.objects.get(id=order_id)
+    context['order'] = order
+
+    if request.POST:
+        form = ProductSendToDeliveryForm(request.POST)
+        if form.is_valid():
+            delivery_person = form.cleaned_data['delivery_person']
+            note = form.cleaned_data['note']
+
+            OrderProcessingDate.objects.create(order=order,
+                                               status='product_send_to_delivery_person',
+                                               )
+
+            order.status = 'product_send_to_delivery_person'
+            order.save()
+            DeliveryInfo.objects.create(order=order, delivery_person=delivery_person,
+                                        note = note)
+            return HttpResponseRedirect(reverse('arrived-product-list'))
+
+    else:
+        form = ProductSendToDeliveryForm()
+        context['form'] = form
+        return render(request, template_name='order_management/product_send_to_delivery_person_form.html',
+                      context=context)
+
+
+class ProductSendToDeliveryPersonList(IsStaffMixin, ListView):
+    model = Order
+    template_name = 'order_management/product_sent_to_delivery_person_list.html'
+
+    def get_queryset(self):
+        return Order.objects.filter(status='product_send_to_delivery_person')
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductSendToDeliveryPersonList, self).get_context_data(**kwargs)
+        context['some_data'] = 'This is just some data'
+        return context

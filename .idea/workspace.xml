@@ -2,19 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18b61b44-939b-4408-b1ec-2db22bd40a2b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/order_management/templates/order_management/product_arrived_in_bangladesh_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order_management/templates/order_management/product_in_shipping_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order_management/templates/order_management/product_send_to_delivery_person_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order_management/templates/order_management/product_sent_to_delivery_person_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order_management/templates/order_management/purchased_product_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/templates/order_management/purchased_product_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eZon/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/eZon/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/templates/order_management/admin_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/templates/order_management/admin_dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/templates/order_management/product_arrived_in_bangladesh_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/templates/order_management/product_arrived_in_bangladesh_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -33,9 +42,10 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Library" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -50,7 +60,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.admin">
-    <configuration name="admin" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="admin" type="PythonConfigurationType" factoryName="Python">
       <module name="eZon" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -123,11 +133,6 @@
       <item itemvalue="Django server.eZon" />
       <item itemvalue="Python.admin" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.admin" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -148,7 +153,25 @@
       <workItem from="1564411255793" duration="5182000" />
       <workItem from="1564445168833" duration="646000" />
       <workItem from="1564475816740" duration="101435000" />
-      <workItem from="1564952598751" duration="39298000" />
+      <workItem from="1564952598751" duration="44287000" />
+      <workItem from="1565432244255" duration="1471000" />
+      <workItem from="1565520831686" duration="690000" />
+      <workItem from="1566144428129" duration="597000" />
+      <workItem from="1566388439003" duration="80000" />
+      <workItem from="1566396381686" duration="1023000" />
+      <workItem from="1566986090322" duration="1479000" />
+      <workItem from="1567018879814" duration="600000" />
+      <workItem from="1567507819515" duration="2146000" />
+      <workItem from="1567588109915" duration="1958000" />
+      <workItem from="1567840091479" duration="1399000" />
+      <workItem from="1568387362402" duration="3814000" />
+      <workItem from="1568677360689" duration="599000" />
+      <workItem from="1568756240010" duration="596000" />
+      <workItem from="1568925548714" duration="1393000" />
+      <workItem from="1569018370111" duration="10036000" />
+      <workItem from="1569468596923" duration="87000" />
+      <workItem from="1570128967356" duration="12595000" />
+      <workItem from="1570246366302" duration="6132000" />
     </task>
     <servers />
   </component>

@@ -9,5 +9,3 @@ class SignUp(CreateView):
     template_name = 'registration/signup.html'
 
 
-def login_success():
-    login

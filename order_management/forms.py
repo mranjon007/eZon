@@ -54,3 +54,18 @@ class ProductPurchaseCancelFrom(forms.Form):
     note = forms.CharField(label='Cancel Note', max_length=400, required=True, help_text='if you cancel \
                                                     the purchase then must provide the reason '
                                                                      'for canceling')
+
+
+# class ProductPurchaseFrom(forms.Form):
+#     purchase_id = forms.CharField(label='Purchase Id', max_length=100, required=True, help_text=""
+#                                                     "Please enter the product id")
+
+
+class ProductSendToDeliveryForm(forms.Form):
+    delivery_person = forms.ChoiceField()
+    note = forms.CharField(label='Delivery Note', max_length=400, required=True, help_text='if you cancel \
+                                                        the purchase then must provide the reason '
+                                                                                         'for canceling')
+    def __init__(self, *args, **kwargs):
+        super(forms.Form, self).__init__(*args, **kwargs)
+        self.fields['delivery_person'].choices = [(u.id, u.name) for u in CustomUser.objects.filter(is_staff='True')]

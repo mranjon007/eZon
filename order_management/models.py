@@ -16,6 +16,7 @@ ORDER_STATUS = (
     ('purchase_canceled', 'Purchase Canceled'),
     ('product_in_shipping', 'Product in Shipping'),
     ('product_arrived_in_ezon_office', 'Product Arrived In eZon Office'),
+    ('product_send_to_delivery_person', 'Product Send to Delivery Person'),
     ('product_delivered_to_the_customer', 'Product Delivered To The Customer'),
     ('order_completed', 'Order Completed'),
     ('order_canceled', 'Order Canceled'),
@@ -76,7 +77,7 @@ class Order(models.Model):
     product_company = models.CharField(max_length=50, choices=COMPANY_LISTING, default='amazon',)
 
     product_country = models.CharField(max_length=50, choices=COUNTRY_LIST, default='usa')
-
+    purchase_id = models.CharField(max_length=200, blank=True, null=True)
     # product_category should be added later
 
     class Meta:
@@ -117,7 +118,8 @@ class OrderProcessingDate(models.Model):
 
 class DeliveryInfo(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='delivery_info')
-    provider_name = models.CharField(max_length=100, default='e-courier')
+    delivery_person = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL,
+                             null=True, blank=True)
     note = models.TextField(max_length=500, blank=True, null=True)
 
     class Meta:
