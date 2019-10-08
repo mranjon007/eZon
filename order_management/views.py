@@ -28,6 +28,7 @@ from .forms import (
     PlaceOrderForm,
     ProductPurchaseCancelFrom,
     ProductSendToDeliveryForm,
+    ProductDeliveryCancelFrom,
 )
 
 from .CustomMixin import (
@@ -369,7 +370,7 @@ class ArrivedProductListView(IsStaffMixin, ListView):
 
 ##################
 @staff_member_required
-def product_send_to_delivery_form_view(request, order_id):
+def product_send_to_delivery_person_form_view(request, order_id):
     context = {}
     order = Order.objects.get(id=order_id)
     context['order'] = order
@@ -386,7 +387,10 @@ def product_send_to_delivery_form_view(request, order_id):
 
             order.status = 'product_send_to_delivery_person'
             order.save()
-            DeliveryInfo.objects.create(order=order, delivery_person=delivery_person,
+
+            # get the custom user instance of delivery person
+            delivery_person_db_instance = CustomUser.objects.get(id=delivery_person)
+            DeliveryInfo.objects.create(order=order, delivery_person=delivery_person_db_instance,
                                         note = note)
             return HttpResponseRedirect(reverse('arrived-product-list'))
 
@@ -406,5 +410,66 @@ class ProductSendToDeliveryPersonList(IsStaffMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductSendToDeliveryPersonList, self).get_context_data(**kwargs)
-        context['some_data'] = 'This is just some data'
+        #context['some_data'] = 'This is just some data'
+        return context
+
+
+@staff_member_required
+def product_delivery_cancle_form_view(request, order_id):
+    context = {}
+    order = Order.objects.get(id=order_id)
+    context['order'] = order
+
+    if request.POST:
+        form = ProductDeliveryCancelFrom(request.POST)
+        if form.is_valid():
+            note = form.cleaned_data['note']
+
+            OrderProcessingDate.objects.create(order=order,
+                                               status='product_delivery_canceled',
+                                               )
+            order.status = 'product_delivery_canceled'
+            order.save()
+            return HttpResponseRedirect(reverse('product-send-to-delivery-person-list'))
+
+    else:
+        form = ProductDeliveryCancelFrom()
+        context['form'] = form
+        return render(request, template_name='order_management/product_send_to_delivery_person_form.html',
+                      context=context)
+
+
+class ProductDeliveryCanceledList(IsStaffMixin, ListView):
+    model = Order
+    template_name = 'order_management/product_delivery_canceled_list.html'
+
+    def get_queryset(self):
+        return Order.objects.filter(status='product_delivery_canceled')
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDeliveryCanceledList, self).get_context_data(**kwargs)
+        return context
+
+
+@staff_member_required
+def product_delivered_to_customer_view(request, order_id):
+    context = {}
+    order = Order.objects.get(id=order_id)
+    order.status = 'product_delivered_to_the_customer'
+    order.save()
+    OrderProcessingDate.objects.create(order=order,
+                                       status='product_delivered_to_the_customer',
+                                       )
+    return HttpResponseRedirect(reverse('product-send-to-delivery-person-list'))
+
+
+class ProductDeliveredToCustomerList(IsStaffMixin, ListView):
+    model = Order
+    template_name = 'order_management/product_delivered_to_customer_list.html'
+
+    def get_queryset(self):
+        return Order.objects.filter(status='product_delivered_to_the_customer')
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDeliveredToCustomerList, self).get_context_data(**kwargs)
         return context

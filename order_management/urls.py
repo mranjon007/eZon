@@ -16,8 +16,12 @@ from .views import (
     ProductInShippingListView,
     shipping_to_arrived_in_bangladesh_view,
     ArrivedProductListView,
-    product_send_to_delivery_form_view,
+    product_send_to_delivery_person_form_view,
     ProductSendToDeliveryPersonList,
+    product_delivery_cancle_form_view,
+    ProductDeliveryCanceledList,
+    product_delivered_to_customer_view,
+    ProductDeliveredToCustomerList,
 )
 
 
@@ -38,9 +42,13 @@ urlpatterns = [
     path('purchased_product_send_to_shipping/<int:order_id>/', purchased_product_send_to_shipping_view, name='purchased-product-send-to-shipping'),
     path('product_in_shipping_list/', ProductInShippingListView.as_view(), name='product-in-shipping-list'),
     path('shipping_to_arrived_in_bangladesh/<int:order_id>/', shipping_to_arrived_in_bangladesh_view, name='shipping-to-arrived-in-bangladesh'),
-    path('arrived_product_list/', ArrivedProductListView.as_view(), name='arrived-product-list'),
-    path('arrived_product_send_to_delivery/<int:order_id>/', product_send_to_delivery_form_view, name='arrived-product-send-to-delivery'),
-    path('product_send_to_delivery_person_list/', ProductSendToDeliveryPersonList.as_view(), name='product-send-to-delivery-person-list')
+    path('arrived_product_list/_', ArrivedProductListView.as_view(), name='arrived-product-list'),
+    path('arrived_product_send_to_delivery/<int:order_id>/', product_send_to_delivery_person_form_view, name='arrived-product-send-to-delivery-person'),
+    path('product_send_to_delivery_person_list/', ProductSendToDeliveryPersonList.as_view(), name='product-send-to-delivery-person-list'),
+    path('product_delivery_cancel_form/<int:order_id>', product_delivery_cancle_form_view, name='product-delivery-cancel-form'),
+    path('product_delivery_canceled_list/', ProductDeliveryCanceledList.as_view(), name='product-delivery-canceled-list'),
+    path('product_delivered_to_customer/<int:order_id>', product_delivered_to_customer_view, name='product-delivered-to-customer'),
+    path('product_delivered_to_customer_list/', ProductDeliveredToCustomerList.as_view(), name='product-delivered-to-customer-list')
 
     #path('arrived_product_cancel_delivery/<int:order_id>/'),
     #path('canceled_after_arrive_list/')

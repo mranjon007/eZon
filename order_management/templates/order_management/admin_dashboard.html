@@ -28,7 +28,10 @@
         <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'arrived-product-list' %}'">Arrived Products</button>
       </div>
       <div class="btn-group mr-2" role="group" aria-label="Second group">
-        <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'product-send-to-delivery-person-list' %}'">Send to Delivery</button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'product-delivery-canceled-list' %}'">Product Delivery Canceled</button>
+      </div>
+      <div class="btn-group mr-2" role="group" aria-label="Second group">
+        <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'product-delivered-to-customer-list' %}'">Product Delivered to Customer</button>
       </div>
     </div>
 
@@ -36,6 +39,10 @@
       <div class="btn-group mr-2" role="group" aria-label="Second group">
         <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'product-in-shipping-list' %}'">All Orders</button>
       </div>
+      <div class="btn-group mr-2" role="group" aria-label="Second group">
+        <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'product-in-shipping-list' %}'">All Orders</button>
+      </div>
+
     </div>
 
 {% endblock %}

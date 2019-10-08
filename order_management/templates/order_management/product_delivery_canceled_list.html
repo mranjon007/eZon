@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2 class="h2">Arrived Product List</h2>
+    <h2 class="h2">Product Delivery Canceled List</h2>
 
     {% if order_list %}
         {% for order in order_list %}
@@ -11,11 +11,11 @@
             <a href="{{ order.product_url }}">{{ order.product_url }}</a>
         </p>
         <p><strong>admin note:</strong> {{ order.admin_note }}</p>
-        <a href="{% url 'arrived-product-send-to-delivery-person' order.id %}" class="btn btn-primary">Send to delivery person</a>
-        <a href="" class="btn btn-primary">Cancel</a>
+{#        <a href="{% url 'product-purchase' order_id=order.id  %}" class="btn btn-primary">Delivered</a>#}
+        <a href="#" class="btn btn-primary">Koi jabe thik nai button</a>
         {% endfor %}
 
     {% else %}
-        <h3>There is no arrived product available right now.</h3>
+        <h3>There is no product in the delivery now.</h3>
     {% endif %}
 {% endblock %}
