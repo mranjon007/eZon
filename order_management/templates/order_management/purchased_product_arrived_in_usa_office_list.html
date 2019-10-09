@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2j class="h2">Product in Shipping List</h2j>
+    <h2 class="h2">Product Arrived in USA Office List</h2>
     {% if order_list %}
     <table class="table table">
       <thead>
@@ -14,7 +14,7 @@
         {% for order in order_list %}
         <tr>
             <td scope="row">{{ order.get_order_number }}</td>
-            <td scope="row"><a href="{% url 'shipping-to-arrived-in-bangladesh' order_id=order.id %}" class="btn btn-primary">Arrived in Bangladesh Office</a></td>
+            <td scope="row"><a href="{% url 'purchased-product-send-to-shipping' order_id=order.id %}" class="btn btn-primary">Send to shipping</a></td>
         </tr>
         {% endfor %}
       </tbody>

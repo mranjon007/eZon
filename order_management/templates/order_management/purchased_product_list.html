@@ -14,7 +14,7 @@
         {% for order in order_list %}
         <tr>
             <td scope="row">{{ order.get_order_number }}</td>
-            <td scope="row"><a href="{% url 'purchased-product-send-to-shipping' order_id=order.id %}" class="btn btn-primary">Send to shipping</a></td>
+            <td scope="row"><a href="{% url 'product-arrived-in-usa-office-view' order_id=order.id %}" class="btn btn-primary">Arrived in USA Office</a></td>
         </tr>
         {% endfor %}
       </tbody>

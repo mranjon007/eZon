@@ -49,8 +49,11 @@ class PlaceOrderForm(forms.Form):
     #     if CustomUser.objects.filter(phone_number=phone_number):
     #         raise ValidationError(_('this phone number is already exist'))
 
+class ProductPurchaseForm(forms.Form):
+    purchase_id = forms.CharField(max_length=100, required=True, help_text='Please enter the purchase id')
 
-class ProductPurchaseCancelFrom(forms.Form):
+
+class ProductPurchaseCancelForm(forms.Form):
     note = forms.CharField(label='Cancel Note', max_length=400, required=True, help_text='if you cancel \
                                                     the purchase then must provide the reason '
                                                                      'for canceling')
