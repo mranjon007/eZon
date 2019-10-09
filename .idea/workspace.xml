@@ -2,17 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18b61b44-939b-4408-b1ec-2db22bd40a2b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/order_management/templates/order_management/product_purchase_form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order_management/templates/order_management/purchased_product_arrived_in_usa_office_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order_management/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order_management/templates/order_management/admin_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/templates/order_management/admin_dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order_management/templates/order_management/product_in_shipping_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/templates/order_management/product_in_shipping_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order_management/templates/order_management/purchased_product_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/templates/order_management/purchased_product_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/templates/order_management/purchase_canceled_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/templates/order_management/purchase_canceled_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/templates/order_management/purchased_product_arrived_in_usa_office_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/templates/order_management/product_arrived_in_usa_office_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -172,7 +169,7 @@
       <workItem from="1570246366302" duration="9387000" />
       <workItem from="1570410320708" duration="1803000" />
       <workItem from="1570476044634" duration="9165000" />
-      <workItem from="1570552805748" duration="11039000" />
+      <workItem from="1570552805748" duration="17081000" />
     </task>
     <servers />
   </component>
