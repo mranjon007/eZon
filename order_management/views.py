@@ -261,7 +261,7 @@ def product_purchase_form_view(request, order_id):
 
             OrderProcessingDate.objects.create(order=order,
                                                status='product_purchased',
-                                               note=note)
+                                               )
             order.status = 'product_purchased'
             order.save()
             return HttpResponseRedirect(reverse('product-purchase-request-list'))
@@ -334,7 +334,7 @@ class PurchasedProductArrivedInUsaOfficeListView(IsStaffMixin, ListView):
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context
-        context = super(PurchasedProductReceivedInUsaOfficeListView, self).get_context_data(**kwargs)
+        context = super(PurchasedProductArrivedInUsaOfficeListView, self).get_context_data(**kwargs)
         # Create any data and add it to the context
         context['some_data'] = 'This is just some data'
         return context
@@ -350,23 +350,6 @@ class PurchaseCanceledListView(IsStaffMixin, ListView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context
         context = super(PurchaseCanceledListView, self).get_context_data(**kwargs)
-        # Create any data and add it to the context
-        context['some_data'] = 'This is just some data'
-        return context
-
-
-
-
-class PurchasedProductReceivedInUsaOfficeListView(IsStaffMixin, ListView):
-    model = Order
-    template_name = 'order_management/purchased_product_list.html'
-
-    def get_queryset(self):
-        return Order.objects.filter(status='product_purchased')
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get the context
-        context = super(PurchasedProductListView, self).get_context_data(**kwargs)
         # Create any data and add it to the context
         context['some_data'] = 'This is just some data'
         return context

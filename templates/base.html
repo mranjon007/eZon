@@ -33,6 +33,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact Us</a>
               </li>
+              {% if request.user.is_staff %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin-dashboard' %}">Admin Dashboard</a>
+              </li>
+              {% endif %}
 
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
