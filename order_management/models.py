@@ -14,6 +14,7 @@ ORDER_STATUS = (
     ('product_purchase_request', 'Product Purchase Request'),
     ('purchase_canceled', 'Purchase Canceled'),
     ('product_purchased', 'Product Purchased'),
+    ('product_arrived_in_usa_office', 'Product Arrived in USA Office'),
     ('product_in_shipping', 'Product in Shipping'),
     ('product_arrived_in_ezon_office', 'Product Arrived In eZon Office'),
     ('product_send_to_delivery_person', 'Product Send to Delivery Person'),

@@ -26,7 +26,8 @@ from .forms import (
     PriceQueryForm,
     PriceQueryUpdateForm,
     PlaceOrderForm,
-    ProductPurchaseCancelFrom,
+    ProductPurchaseForm,
+    ProductPurchaseCancelForm,
     ProductSendToDeliveryForm,
     ProductDeliveryCancelFrom,
 )
@@ -248,15 +249,28 @@ class ProductPurchaseRequestListView(IsStaffMixin, ListView):
 
 
 @staff_member_required
-def product_purchase_view(request, order_id):
+def product_purchase_form_view(request, order_id):
     context = {}
     order = Order.objects.get(id=order_id)
-    order.status = 'product_purchased'
-    order.save()
-    OrderProcessingDate.objects.create(order=order,
-                                       status='product_purchased',
-                                       )
-    return HttpResponseRedirect(reverse('product-purchase-request-list'))
+    context['order'] = order
+
+    if request.POST:
+        form = ProductPurchaseForm(request.POST)
+        if form.is_valid():
+            purchase_id = form.cleaned_data['purchase_id']
+
+            OrderProcessingDate.objects.create(order=order,
+                                               status='product_purchased',
+                                               note=note)
+            order.status = 'product_purchased'
+            order.save()
+            return HttpResponseRedirect(reverse('product-purchase-request-list'))
+
+    else:
+        form = ProductPurchaseForm()
+        context['form'] = form
+        return render(request, template_name='order_management/product_purchase_form.html',
+                      context=context)
 
 
 @staff_member_required
@@ -266,7 +280,7 @@ def purchase_cancel_view(request, order_id):
     context['order'] = order
 
     if request.POST:
-        form = ProductPurchaseCancelFrom(request.POST)
+        form = ProductPurchaseCancelForm(request.POST)
         if form.is_valid():
             note = form.cleaned_data['note']
 
@@ -278,7 +292,7 @@ def purchase_cancel_view(request, order_id):
             return HttpResponseRedirect(reverse('product-purchase-request-list'))
 
     else:
-        form = ProductPurchaseCancelFrom()
+        form = ProductPurchaseCancelForm()
         context['form'] = form
         return render(request, template_name='order_management/purchase_cancel_form.html',
                       context=context)
@@ -299,6 +313,33 @@ class PurchasedProductListView(IsStaffMixin, ListView):
         return context
 
 
+@staff_member_required
+def purchased_product_arrived_in_usa_office_view(request, order_id):
+    context = {}
+    order = Order.objects.get(id=order_id)
+    order.status = 'product_arrived_in_usa_office'
+    order.save()
+    OrderProcessingDate.objects.create(order=order,
+                                       status='product_arrived_in_usa_office',
+                                       )
+    return HttpResponseRedirect(reverse('purchased-product-list'))
+
+
+class PurchasedProductArrivedInUsaOfficeListView(IsStaffMixin, ListView):
+    model = Order
+    template_name = 'order_management/product_arrived_in_usa_office_list.html'
+
+    def get_queryset(self):
+        return Order.objects.filter(status='product_arrived_in_usa_office')
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(PurchasedProductReceivedInUsaOfficeListView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['some_data'] = 'This is just some data'
+        return context
+
+
 class PurchaseCanceledListView(IsStaffMixin, ListView):
     model = Order
     template_name = 'order_management/purchase_canceled_list.html'
@@ -309,6 +350,23 @@ class PurchaseCanceledListView(IsStaffMixin, ListView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context
         context = super(PurchaseCanceledListView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['some_data'] = 'This is just some data'
+        return context
+
+
+
+
+class PurchasedProductReceivedInUsaOfficeListView(IsStaffMixin, ListView):
+    model = Order
+    template_name = 'order_management/purchased_product_list.html'
+
+    def get_queryset(self):
+        return Order.objects.filter(status='product_purchased')
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(PurchasedProductListView, self).get_context_data(**kwargs)
         # Create any data and add it to the context
         context['some_data'] = 'This is just some data'
         return context
