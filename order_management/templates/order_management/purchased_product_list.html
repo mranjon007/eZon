@@ -6,7 +6,8 @@
     <table class="table table">
       <thead>
         <tr>
-          <th scope="col">order Number</th>
+          <th scope="col">Order Number</th>
+          <th scope="col">Purchase Id</th>
           <th scope="col">Update</th>
         </tr>
       </thead>
@@ -14,6 +15,7 @@
         {% for order in order_list %}
         <tr>
             <td scope="row">{{ order.get_order_number }}</td>
+            <td scope="row">{{ order.purchase_id }}</td>
             <td scope="row"><a href="{% url 'product-arrived-in-usa-office-view' order_id=order.id %}" class="btn btn-primary">Arrived in USA Office</a></td>
         </tr>
         {% endfor %}

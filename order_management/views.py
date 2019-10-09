@@ -263,6 +263,7 @@ def product_purchase_form_view(request, order_id):
                                                status='product_purchased',
                                                )
             order.status = 'product_purchased'
+            order.purchase_id = purchase_id
             order.save()
             return HttpResponseRedirect(reverse('product-purchase-request-list'))
 
@@ -359,12 +360,13 @@ class PurchaseCanceledListView(IsStaffMixin, ListView):
 def purchased_product_send_to_shipping_view(request, order_id):
     context = {}
     order = Order.objects.get(id=order_id)
+    print('Send to shipping........')
     order.status = 'product_in_shipping'
     order.save()
     OrderProcessingDate.objects.create(order=order,
                                        status='product_in_shipping',
                                        )
-    return HttpResponseRedirect(reverse('purchased-product-list'))
+    return HttpResponseRedirect(reverse('product-arrived-in-usa-office-list'))
 
 
 class ProductInShippingListView(IsStaffMixin, ListView):
