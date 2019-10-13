@@ -17,3 +17,18 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm):
         model = CustomUser
         fields = UserChangeForm.Meta.fields
+
+
+class PhoneNumberVerificationForm(forms.Form):
+    verification_code = forms.CharField(max_length=4, help_text="Enter the verification code sent to your mobile number")
+    # def clean_customer_email_address(self):
+    #     email = self.cleaned_data['customer_email_address']
+    #     if CustomUser.objects.get(email=email):
+    #         raise ValidationError(_("this email is already exist"))
+    #     # Remember to always return the cleaned data.
+    #     return email
+    #
+    # def clean_customer_phone_number(self):
+    #     phone_number = self.cleaned_data['customer_phone_number']
+    #     if CustomUser.objects.filter(phone_number=phone_number):
+    #         raise ValidationError(_('this phone number is already exist'))

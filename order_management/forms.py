@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class PriceQueryForm(forms.Form):
     product_url = forms.URLField(max_length=300, required=True, initial='https://')
-    product_company = forms.ChoiceField(choices=COMPANY_LISTING, required=False)
+    # product_company = forms.ChoiceField(choices=COMPANY_LISTING, required=False)
 
 
 class PriceQueryUpdateForm(forms.Form):

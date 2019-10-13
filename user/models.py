@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class CustomUser(AbstractUser):
@@ -13,8 +14,8 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
 
-# class VerifyPhoneNumber(models.Model):
-#     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL)
-#     code = models.IntegerField(max_length=4)
-#     count = models.DecimalField()
-    
+class PhoneNumberVerification(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    verification_code = models.PositiveIntegerField(validators=[MinValueValidator(1000), MaxValueValidator(9999)], null=True)
+    count = models.PositiveIntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)], null=True)
+    is_verified = models.BooleanField(default=False)

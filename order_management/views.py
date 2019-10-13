@@ -59,7 +59,7 @@ def homepage(request):
                     order.product_company = form.cleaned_data['product_company']
                 order.user = request.user
                 new_order = Order.objects.create(product_url=order.product_url,
-                                                 product_country=order.product_company,
+                                                 #product_country=order.product_company,
                                                  user=order.user)
                 new_order_processing_dates = \
                     OrderProcessingDate.objects.create(order=new_order,
