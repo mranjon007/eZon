@@ -1,0 +1,7 @@
+{% extends 'base-front.html' %}
+
+{% block content %}
+    <h3>Order Number: {{ order.get_order_number }}</h3>
+    <p><strong>Product Url:</strong><a href="{{ order.product_url }}">{{ order.product_url }}</a>
+    <p><strong>Current Status:</strong>{{ order.status }}</p>
+{% endblock %}

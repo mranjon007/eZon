@@ -1,6 +1,6 @@
 import datetime
 
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
@@ -74,8 +74,21 @@ def user_dashboard(request, user_id):
         return render(request, template_name='order_management/user/user_dashboard.html', context=context)
 
 
+class UserOrderDetailView(LoginRequiredMixin, DetailView):
+    model = Order
+    template_name = 'order_management/price_query_list.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(UserOrderDetailView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['some_data'] = 'This is just some data'
+        return context
 
 
+
+
+########## END_USER ##########
 
 def homepage(request):
     context = {}
@@ -102,6 +115,7 @@ def homepage(request):
     # print(form)
     context['form'] = form
     return render(request, template_name='order_management/home.html', context=context)
+
 
 
 class AdminDashBoardView(LoginRequiredMixin, IsStaffMixin, TemplateView):

@@ -4,10 +4,6 @@ from .forms import CustomUserCreationForm, PhoneNumberVerificationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
-
-
-
-
 import random
 print(random.randint(1,101))
 
