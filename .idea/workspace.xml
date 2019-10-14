@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18b61b44-939b-4408-b1ec-2db22bd40a2b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/user/templates/user/phone_number_verification.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order_management/templates/order_management/user/user_dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order_management/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_management/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -176,7 +173,7 @@
       <workItem from="1570829941837" duration="1999000" />
       <workItem from="1570836195325" duration="9645000" />
       <workItem from="1570969536993" duration="6825000" />
-      <workItem from="1571004136782" duration="968000" />
+      <workItem from="1571004136782" duration="8005000" />
     </task>
     <servers />
   </component>

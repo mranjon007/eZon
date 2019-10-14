@@ -25,6 +25,8 @@ def signup(request):
             user = form.save()
             print(user)
             login(request, user)
+            send()
+            return redirect('phone-number-verification')
             # username = form.cleaned_data.get('username')
             # raw_password = form.cleaned_data.get('password1')
             # user = authenticate(username=username, password=raw_password)
@@ -65,4 +67,5 @@ def verify_phone_number(request, user_id):
                           context=context)
 
 
+# def send_code(request, )
 

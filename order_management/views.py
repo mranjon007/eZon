@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.forms import ModelForm
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 from .models import (
@@ -45,6 +45,36 @@ def is_tuple_member(a_tuple, member):
         return True
     else:
         return False
+
+
+
+######### User #########
+
+@login_required
+def user_dashboard(request, user_id):
+    context = {}
+    user = CustomUser.objects.get(id=user_id)
+    if request.method == 'POST':
+        form = PriceQueryForm(request.POST)
+        if form.is_valid():
+            product_url = form.cleaned_data['product_url']
+            new_order = Order.objects.create(product_url=product_url,
+                                             user=user)
+            new_order_processing_dates = \
+                OrderProcessingDate.objects.create(order=new_order,
+                                                   status=new_order.status)
+            order_list = Order.objects.filter(user=user).all()
+            context['order_list'] = order_list
+            return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id':user_id}))  # user-dashboard e return korbe
+    else:
+        form = PriceQueryForm()
+        context['form'] = form
+        order_list = Order.objects.filter(user=user).all()
+        context['order_list'] = order_list
+        return render(request, template_name='order_management/user/user_dashboard.html', context=context)
+
+
+
 
 
 def homepage(request):
