@@ -4,7 +4,7 @@ from .views import (
     AdminDashBoardView,
 
     user_dashboard,
-    UserOrderDetailView,
+    user_order_detail_view,
 
     PriceQueryListView,
     update_price_query,
@@ -36,7 +36,7 @@ urlpatterns = [
     path('admin_dashboard/', AdminDashBoardView.as_view(), name='admin-dashboard'),
 
     path('user_dashboard/<int:user_id>', user_dashboard, name='user-dashboard'),
-    path('<slug:slug>/', UserOrderDetailView.as_view(), name='user-order-detail'),
+    path('user_dashboard/order/<int:primary_key>', user_order_detail_view, name='user-order-detail'),
 
     path('price_query_list/', PriceQueryListView.as_view(), name='price-query-list'),
     path('price_query_update/<pk>/', update_price_query, name='price-query-update'),

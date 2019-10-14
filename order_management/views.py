@@ -1,6 +1,7 @@
 import datetime
 
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView
+from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
@@ -74,19 +75,12 @@ def user_dashboard(request, user_id):
         return render(request, template_name='order_management/user/user_dashboard.html', context=context)
 
 
-class UserOrderDetailView(LoginRequiredMixin, DetailView):
-    model = Order
-    template_name = 'order_management/price_query_list.html'
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get the context
-        context = super(UserOrderDetailView, self).get_context_data(**kwargs)
-        # Create any data and add it to the context
-        context['some_data'] = 'This is just some data'
-        return context
-
-
-
+def user_order_detail_view(request, primary_key):
+    try:
+        order = Order.objects.get(pk=primary_key)
+    except Order.DoesNotExist:
+        raise Http404('Order does not exist')
+    return render(request, 'order_management/user/user_order_detail.html', context={'order': order })
 
 ########## END_USER ##########
 
