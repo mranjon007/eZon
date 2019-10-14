@@ -55,8 +55,8 @@ def homepage(request):
             if form.is_valid():
                 order = Order()
                 order.product_url = form.cleaned_data['product_url']
-                if form.cleaned_data['product_company']:
-                    order.product_company = form.cleaned_data['product_company']
+                # if form.cleaned_data['product_company']:
+                #     order.product_company = form.cleaned_data['product_company']
                 order.user = request.user
                 new_order = Order.objects.create(product_url=order.product_url,
                                                  #product_country=order.product_company,
@@ -64,12 +64,12 @@ def homepage(request):
                 new_order_processing_dates = \
                     OrderProcessingDate.objects.create(order=new_order,
                                                        status=new_order.status)
-                return HttpResponseRedirect(reverse('login'))  # user-dashboard e return korbe
+                return HttpResponseRedirect(reverse('signup'))  # user-dashboard e return korbe
         else:
             context['message'] = 'Please Login/Register to place a product price Query'
 
     form = PriceQueryForm()
-    print(form)
+    # print(form)
     context['form'] = form
     return render(request, template_name='order_management/home.html', context=context)
 
