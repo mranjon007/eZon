@@ -17,6 +17,7 @@
   <!-- Custom styles for this template-->
   <link rel="stylesheet" href="{% static 'order_management/css/main-front.css' %}">
 
+  <!-- Tidio Chat Plugin -->
   <script src="//code.tidio.co/jbupbdoq0x3slf3wtuwsvawa3pkigra0.js"></script>
 
 </head>
@@ -37,14 +38,14 @@
       
           <div class="navbar-collapse collapse" id="navbarsExample07" style="">
             <ul class="navbar-nav ml-lg-auto">
-              <li class="nav-item active">
+              <li class="nav-item active">  
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
               </li>
               {% if user.is_authenticated %} 
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.name }}</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown07">
-                  <a class="dropdown-item" href="{% url 'admin-dashboard' %}">Dashboard</a>
+                  <a class="dropdown-item" href="{% url 'user-dashboard' user_id=user.id %}">Dashboard</a>
                   <a class="dropdown-item" href="#">Profile</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'logout' %}">
@@ -68,7 +69,7 @@
     {% block content %}
     {% endblock %}
 
-    <footer class="footer fixed-bottom">
+    <footer class="footer">
       <div class="container py-5 mb-3">
         <div class="row">
           <div class="footer-col col-6 col-lg-3">
