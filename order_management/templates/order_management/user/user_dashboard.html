@@ -1,4 +1,4 @@
-{% extends 'base-front.html' %}
+{% extends 'base-user.html' %}
 
 {% block content %}
 
@@ -13,26 +13,26 @@
             <button class="btn btn-primary btn-block" type="submit">Submit</button>
           </form>
               <h2 class="h2">Price Queries</h2>
-    {% if order_list %}
-    <table class="table table">
-      <thead>
-        <tr>
-          <th scope="col">order Number</th>
-          <th scope="col">Update</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for order in order_list %}
-        <tr>
-            <td scope="row">{{ order.get_order_number }}</td>
-            <td scope="row"><a href="{% url 'price-query-update' pk=order.id %}" class="btn btn-primary">update</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-        <h3 class="h3">There is no price query available now.</h3>
-    {% endif %}
+          {% if order_list %}
+          <table class="table table">
+            <thead>
+              <tr>
+                <th scope="col">order Number</th>
+                <th scope="col">Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in order_list %}
+              <tr>
+                  <td scope="row">{{ order.get_order_number }}</td>
+                  <td scope="row"><a href="{% url 'price-query-update' pk=order.id %}" class="btn btn-primary">update</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+              <h3 class="h3">There is no price query available now.</h3>
+          {% endif %}
           <h3 STYLE="color:red">{{ message }}</h3>
         </div>
       </div>
