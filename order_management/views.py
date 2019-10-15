@@ -150,6 +150,8 @@ def update_price_query(request, pk):
             order.bd_custom = form.cleaned_data['bd_custom']
             order.service_charge = form.cleaned_data['service_charge']
             order.mobile_or_bank_charge = form.cleaned_data['mobile_or_bank_charge']
+            order.currency = form.cleaned_data['currency']
+            order.exchange_rate = form.cleaned_data['exchange_rate']
             order.admin_note = form.cleaned_data['admin_note']
 
             order_status = 'price_query_submitted'
@@ -221,6 +223,8 @@ def place_order_form_view(request):
             bd_custom = form.cleaned_data['bd_custom']
             service_charge = form.cleaned_data['service_charge']
             mobile_or_bank_charge = form.cleaned_data['mobile_or_bank_charge']
+            currency = form.cleaned_data['currency']
+            exchange_rate = form.cleaned_data['exchange_rate']
             if is_tuple_member(PAYMENT_STATUS, form.cleaned_data['payment_status']):
                 payment_status = form.cleaned_data['payment_status']
             if form.cleaned_data['admin_note']:
@@ -256,7 +260,8 @@ def place_order_form_view(request):
                                          bd_custom=bd_custom,
                                          service_charge=service_charge,
                                          mobile_or_bank_charge=mobile_or_bank_charge,
-
+                                         currency=currency,
+                                         exchange_rate=exchange_rate,
                                          payment_status=payment_status,
                                          admin_note=new_order.admin_note,
                                          customer_note=new_order.customer_note,

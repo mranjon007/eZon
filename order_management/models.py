@@ -38,6 +38,11 @@ COUNTRY_LIST = (
     ('others', 'Others')
 )
 
+CURRENCY_LIST = (
+    ('dollar', 'Dollar'),
+    ('pound', 'Pound')
+)
+
 PAYMENT_STATUS = (
     ('not_paid', 'Not Paid'),
     ('partially_paid', 'Partially Paid'),
@@ -76,6 +81,9 @@ class Order(models.Model):
                                     help_text='BD custom charge for the product', default=0)
     exchange_rate = models.DecimalField(max_digits=10, decimal_places=3,
                                         help_text='Change rate of pound or dollar', default=0)
+
+    currency = models.CharField(max_length=50, choices=CURRENCY_LIST, default='dollar',)
+
     service_charge = models.DecimalField(max_digits=10, decimal_places=3,
                                          help_text='Service fee for the product',
                                          default=0)
