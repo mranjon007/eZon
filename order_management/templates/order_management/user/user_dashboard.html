@@ -2,42 +2,46 @@
 
 {% block content %}
 
-  <section class="hero_section">
-    <div class="container">
-      <div class="row figure_holder h-300">
-        <div class="col-12 col-md-6 my-auto">
-          {% load crispy_forms_tags %}
-          <form method="post">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button class="btn btn-primary btn-block" type="submit">Submit</button>
-          </form>
-              <h2 class="h2">Price Queries</h2>
-          {% if order_list %}
-          <table class="table table">
-            <thead>
-              <tr>
-                <th scope="col">order Number</th>
-                <th scope="col">Update</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for order in order_list %}
-              <tr>
-                  <td scope="row">{{ order.get_order_number }}</td>
-                  <td scope="row"><a href="{% url 'user-order-detail' order.id %}" class="btn btn-primary">Detail</a></td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          {% else %}
-              <h3 class="h3">There is no price query available now.</h3>
-          {% endif %}
-          <h3 STYLE="color:red">{{ message }}</h3>
-        </div>
-      </div>
-    </div>
-  </section>
+<div class="col-12 col-md-12 my-auto">
+  
+  <div class="order_placement_form py-2">
+    {% load crispy_forms_tags %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button class="btn btn-primary btn-block" type="submit">Submit</button>
+    </form>
+  </div>
+  
+  
+  <h2 class="h2">Price Queries</h2>
+  {% if order_list %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Order Number</th>
+          <th scope="col">Current Status</th>
+          <th scope="col">Submission Date</th>
+          <th scope="col">Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in order_list %}
+        <tr> 
+            <td scope="row"> <a href="{% url 'user-order-detail' order.id %}"> <b># {{ order.get_order_number }}</b></a> </td>
+            <td scope="row">{{ order.get_status_display }}</td>
+            <td scope="row">{{ order.order_status_dates.all.last.date }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+      <h3 class="h3">There is no price query available now.</h3>
+  {% endif %}
+  <h3 STYLE="color:red">{{ message }}</h3>
+</div>
 
 
 

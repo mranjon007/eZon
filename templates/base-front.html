@@ -13,7 +13,8 @@
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+  <!-- Toggle -->
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link rel="stylesheet" href="{% static 'order_management/css/main-front.css' %}">
 
@@ -45,8 +46,13 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.name }}</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown07">
+                  {% if user.is_staff %} 
+                  <a class="dropdown-item" href="{% url 'admin-dashboard' %}">Dashboard</a>
+                  {% else %}
                   <a class="dropdown-item" href="{% url 'user-dashboard' user_id=user.id %}">Dashboard</a>
                   <a class="dropdown-item" href="#">Profile</a>
+                  {% endif %}
+                  
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'logout' %}">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -135,6 +141,16 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   <!-- Custom scripts for all pages-->
+  <!-- Toogle -->
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
+
+  <script>
+    $(function() {
+      $('#toggle-event').change(function() {
+        $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+      })
+    })
+  </script>
 
 </body>
 </html>

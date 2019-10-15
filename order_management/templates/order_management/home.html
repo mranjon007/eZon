@@ -11,12 +11,60 @@
             {% csrf_token %}
             {{ form|crispy }}
             <button class="btn btn-primary btn-block" type="submit">Submit</button>
-          </form>
           <h3 STYLE="color:red">{{ message }}</h3>
         </div>
       </div>
     </div>
   </section>
+
+  <div class="container">
+    <form>
+      <div class="form-group">
+        <!-- <label for="inputAddress">Product Url</label> -->
+        <input type="text" class="form-control" id="" placeholder="Prodcut Url, Ex:https://.....">
+      </div>
+
+      <div class="form-group">
+        <!-- <label for="inputAddress">Name</label> -->
+        <input type="text" class="form-control" id="" placeholder="Your Name">
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <!-- <label for="">Email</label> -->
+          <input type="email" class="form-control" id="" placeholder="Email">
+        </div>
+        <div class="form-group col-md-6">
+          <!-- <label for="">Phone</label> -->
+          <input type="text" class="form-control" id="" placeholder="Phone">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <!-- <label for="">Email</label> -->
+          <input type="password" class="form-control" id="" placeholder="Pasword">
+        </div>
+        <div class="form-group col-md-6">
+          <!-- <label for="">Phone</label> -->
+          <input type="password" class="form-control" id="" placeholder="Confirm Password">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <!-- <label for="inputAddress">Name</label> -->
+        <textarea class="form-control" id="" placeholder="Customer Notes"></textarea>
+      </div>
+      
+      
+      <div class="form-group">
+        <input id="toggle-event" type="checkbox" checked data-toggle="toggle" data-on="I already have an Account" data-off="I don't have an Account" data-width="100%" data-height="40" data-onstyle="outline-primary" data-offstyle="outline-info">
+        
+        <div id="console-event"></div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Submit Query</button>
+    </form>
+  </div>
 
   
 
