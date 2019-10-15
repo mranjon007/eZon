@@ -6,7 +6,6 @@ from user.models import CustomUser
 import datetime
 from django.utils import timezone
 
-
 ORDER_STATUS = (
     ('price_query', 'Price Query'),
     ('price_query_submitted', 'Price Query Submitted'),
@@ -67,19 +66,32 @@ class Order(models.Model):
     product_price = models.DecimalField(max_digits=10, decimal_places=3,
                                         help_text='Origin Amazon product price',
                                         default=0)
-    product_tax = models.DecimalField(max_digits=10, decimal_places=3,
-                                      help_text='Tax for the product', default=0)
-    product_service_fee = models.DecimalField(max_digits=10, decimal_places=3,
-                                              help_text='Service fee for the product',
-                                              default=0)
+    foreign_tax = models.DecimalField(max_digits=10, decimal_places=3,
+                                      help_text='USA or UK tax for the product', default=0)
+    foreign_shipping = models.DecimalField(max_digits=10, decimal_places=3,
+                                           help_text='USA or UK shipping charge for the product', default=0)
+    bd_shipping = models.DecimalField(max_digits=10, decimal_places=3,
+                                      help_text='BD shipping charge for the product', default=0)
+    bd_custom = models.DecimalField(max_digits=10, decimal_places=3,
+                                    help_text='BD custom charge for the product', default=0)
+    exchange_rate = models.DecimalField(max_digits=10, decimal_places=3,
+                                        help_text='Change rate of pound or dollar', default=0)
+    service_charge = models.DecimalField(max_digits=10, decimal_places=3,
+                                         help_text='Service fee for the product',
+                                         default=0)
+    mobile_or_bank_charge = models.DecimalField(max_digits=10, decimal_places=3,
+                                                help_text="mobile or bank charge",
+                                                default=0)
+
     status = models.CharField(max_length=50, choices=ORDER_STATUS, default='price_query', help_text='Order status')
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS, default='not_paid')
     probable_product_handover_date = models.DateField(blank=True, null=True)
 
-    product_company = models.CharField(max_length=50, choices=COMPANY_LISTING, default='amazon',)
+    product_company = models.CharField(max_length=50, choices=COMPANY_LISTING, default='amazon', )
 
     product_country = models.CharField(max_length=50, choices=COUNTRY_LIST, default='usa')
     purchase_id = models.CharField(max_length=200, blank=True, null=True)
+
     # product_category should be added later
 
     class Meta:
@@ -95,10 +107,9 @@ class Order(models.Model):
         return reverse('order-detail', args=[str(self.id)])
 
     def get_total_price(self):
-        if self.product_price is None or self.product_tax is None or self.product_service_fee is None:
-            return "Product price is not updated"
-        else:
-            return self.product_price + self.product_service_fee + self.product_tax
+        return (self.product_price + self.foreign_shipping + self.foreign_tax +
+                self.bd_shipping + self.bd_custom + self.mobile_bank_charge +
+                self.service_charge) * self.exchange_rate
 
 
 class OrderProcessingDate(models.Model):
@@ -121,8 +132,9 @@ class OrderProcessingDate(models.Model):
 class DeliveryInfo(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='delivery_info')
     delivery_person = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL,
-                             null=True, blank=True)
+                                        null=True, blank=True)
     note = models.TextField(max_length=500, blank=True, null=True)
+    shipping_address = models.CharField(max_length=300, )
 
     class Meta:
         ordering = []
@@ -147,4 +159,3 @@ class PaymentDates(models.Model):
 
     def get_absolute_url(self):
         return reverse('paymentDates-detail', args=[str(self.id)])
-

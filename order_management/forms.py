@@ -16,26 +16,49 @@ class PriceQueryForm(forms.Form):
 
 
 class PriceQueryUpdateForm(forms.Form):
-    product_price = forms.DecimalField(max_digits=10, decimal_places=3, help_text='Origin Amazon product price',)
-    product_tax = forms.DecimalField(max_digits=10, decimal_places=3, help_text='Enter Product Tax')
-    product_service_fee = forms.DecimalField(max_digits=10, decimal_places=3, help_text='Enter Service Fee')
-    admin_note = forms.CharField(max_length=1000,   widget=forms.Textarea, required=False)
+    product_price = forms.DecimalField(max_digits=10, decimal_places=3,
+                                       help_text='Origin Amazon product price')
+    foreign_tax = forms.DecimalField(label="USA/UK tax", max_digits=10, decimal_places=3,
+                                     help_text='Enter USA or UK Tax')
+    foreign_shipping = forms.DecimalField(label="USA/UK shipping", max_digits=10,
+                                          decimal_places=3, help_text='Enter USA or UK Shipping')
+    bd_shipping = forms.DecimalField(label="bd shipping", max_digits=10,
+                                     decimal_places=3, help_text='Enter USA or UK Shipping')
+    bd_custom = forms.DecimalField(label="bd custom", max_digits=10, decimal_places=3,
+                                   help_text='Enter USA or UK Shipping')
+    service_charge = forms.DecimalField(max_digits=10, decimal_places=3,
+                                        help_text='Enter exchange rate')
+    mobile_or_bank_charge = forms.DecimalField(max_digits=10, decimal_places=3,
+                                               help_text='Enter mobile banking charge/ general bank charge')
+    admin_note = forms.CharField(max_length=500, widget=forms.Textarea, required=False)
 
 
 class PlaceOrderForm(forms.Form):
     product_url = forms.URLField(max_length=300)
+    product_url = forms.URLField(max_length=300)
     product_company = forms.ChoiceField(choices=COMPANY_LISTING)
     product_country = forms.ChoiceField(choices=COUNTRY_LIST)
-    product_price = forms.DecimalField(max_digits=10, decimal_places=3, help_text="Origin Product Price in BDT")
-    product_tax = forms.DecimalField(max_digits=10, decimal_places=3, help_text="Product Tax in BDT")
-    product_service_fee = forms.DecimalField(max_digits=10, decimal_places=3, help_text="Product Service Fee")
+    product_price = forms.DecimalField(max_digits=10, decimal_places=3,
+                                       help_text='Origin Amazon product price')
+    foreign_tax = forms.DecimalField(label="USA/UK tax", max_digits=10, decimal_places=3,
+                                     help_text='Enter USA or UK Tax')
+    foreign_shipping = forms.DecimalField(label="USA/UK shipping", max_digits=10,
+                                          decimal_places=3, help_text='Enter USA or UK Shipping')
+    bd_shipping = forms.DecimalField(label="bd shipping", max_digits=10,
+                                     decimal_places=3, help_text='Enter USA or UK Shipping')
+    bd_custom = forms.DecimalField(label="bd custom", max_digits=10, decimal_places=3,
+                                   help_text='Enter USA or UK Shipping')
+    service_charge = forms.DecimalField(max_digits=10, decimal_places=3,
+                                        help_text='Enter exchange rate')
+    mobile_or_bank_charge = forms.DecimalField(max_digits=10, decimal_places=3,
+                                               help_text='Enter mobile banking charge/ general bank charge')
     payment_status = forms.ChoiceField(choices=PAYMENT_STATUS)
     admin_note = forms.CharField(max_length=1000, widget=forms.Textarea, required=False)
     customer_name = forms.CharField(max_length=100)
     customer_phone_number = forms.CharField(max_length=13)
     customer_email_address = forms.CharField(max_length=80)
     customer_address = forms.CharField(max_length=300)
-    customer_note = forms.CharField(max_length=1000, widget=forms.Textarea, required=False)
+    customer_note = forms.CharField(max_length=500, widget=forms.Textarea, required=False)
 
     # def clean_customer_email_address(self):
     #     email = self.cleaned_data['customer_email_address']
@@ -48,6 +71,7 @@ class PlaceOrderForm(forms.Form):
     #     phone_number = self.cleaned_data['customer_phone_number']
     #     if CustomUser.objects.filter(phone_number=phone_number):
     #         raise ValidationError(_('this phone number is already exist'))
+
 
 class ProductPurchaseForm(forms.Form):
     purchase_id = forms.CharField(max_length=100, required=True, help_text='Please enter the purchase id')

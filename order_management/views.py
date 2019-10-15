@@ -111,7 +111,6 @@ def homepage(request):
     return render(request, template_name='order_management/home.html', context=context)
 
 
-
 class AdminDashBoardView(LoginRequiredMixin, IsStaffMixin, TemplateView):
     template_name = 'order_management/admin_dashboard.html'
 
@@ -142,13 +141,15 @@ def update_price_query(request, pk):
     order = get_object_or_404(Order, pk=pk)
 
     if request.method == 'POST':
-
         form = PriceQueryUpdateForm(request.POST)
-
         if form.is_valid():
             order.product_price = form.cleaned_data['product_price']
-            order.product_tax = form.cleaned_data['product_tax']
-            order.product_service_fee = form.cleaned_data['product_service_fee']
+            order.foreign_tax = form.cleaned_data['foreign_tax']
+            order.foreign_shipping = form.cleaned_data['foreign_shipping']
+            order.bd_shipping = form.cleaned_data['bd_shipping']
+            order.bd_custom = form.cleaned_data['bd_custom']
+            order.service_charge = form.cleaned_data['service_charge']
+            order.mobile_or_bank_charge = form.cleaned_data['mobile_or_bank_charge']
             order.admin_note = form.cleaned_data['admin_note']
 
             order_status = 'price_query_submitted'
@@ -205,50 +206,58 @@ def place_order_form_view(request):
     if request.method == 'POST':
 
         form = PlaceOrderForm(request.POST)
-        new_order = Order()
-        new_customer = CustomUser()
         if form.is_valid():
             # get the cleaned order information
-            new_order.product_url = form.cleaned_data['product_url']
+            product_url = form.cleaned_data['product_url']
             if is_tuple_member(COMPANY_LISTING, form.cleaned_data['product_company']):
-                new_order.product_company = form.cleaned_data['product_company']
+                product_company = form.cleaned_data['product_company']
             if is_tuple_member(COUNTRY_LIST, form.cleaned_data['product_country']):
-                new_order.product_country = form.cleaned_data['product_country']
-            new_order.product_price = form.cleaned_data['product_price']
-            new_order.product_tax = form.cleaned_data['product_tax']
-            new_order.product_service_fee = form.cleaned_data['product_service_fee']
+                product_country = form.cleaned_data['product_country']
+
+            product_price = form.cleaned_data['product_price']
+            foreign_tax = form.cleaned_data['foreign_tax']
+            foreign_shipping = form.cleaned_data['foreign_shipping']
+            bd_shipping = form.cleaned_data['bd_shipping']
+            bd_custom = form.cleaned_data['bd_custom']
+            service_charge = form.cleaned_data['service_charge']
+            mobile_or_bank_charge = form.cleaned_data['mobile_or_bank_charge']
             if is_tuple_member(PAYMENT_STATUS, form.cleaned_data['payment_status']):
-                new_order.payment_status = form.cleaned_data['payment_status']
+                payment_status = form.cleaned_data['payment_status']
             if form.cleaned_data['admin_note']:
-                new_order.admin_note = form.cleaned_data['admin_note']
+                admin_note = form.cleaned_data['admin_note']
             if form.cleaned_data['customer_note']:
-                new_order.customer_note = form.cleaned_data['customer_note']
+                customer_note = form.cleaned_data['customer_note']
 
             # get cleaned customer info
-            new_customer.name = form.cleaned_data['customer_name']
-            new_customer.phone_number = form.cleaned_data['customer_phone_number']
-            new_customer.email = form.cleaned_data['customer_email_address']
-            new_customer.address = form.cleaned_data['customer_address']
+            name = form.cleaned_data['customer_name']
+            phone_number = form.cleaned_data['customer_phone_number']
+            email = form.cleaned_data['customer_email_address']
+            address = form.cleaned_data['customer_address']
 
             generated_password = 'AB12CD'
             # check if the email or phone number already exist. later only phone check will work
             user, is_created = \
-                CustomUser.objects.get_or_create(email=new_customer.email,
+                CustomUser.objects.get_or_create(email=email,
                                                  )
-            user.phone_number = new_customer.phone_number
-            user.address = new_customer.address
+            user.phone_number = phone_number
+            user.address = address
             user.name = new_customer.name
             # set the user password and save
             user.set_password(generated_password)
             user.save()
             print(user.phone_number)
-            order = Order.objects.create(product_url=new_order.product_url,
-                                         product_country=new_order.product_country,
-                                         product_company=new_order.product_company,
-                                         product_price=new_order.product_price,
-                                         product_tax=new_order.product_tax,
-                                         product_service_fee=new_order.product_service_fee,
-                                         payment_status=new_order.payment_status,
+            order = Order.objects.create(product_url=product_url,
+                                         product_country=product_country,
+                                         product_company=product_company,
+                                         product_price=product_price,
+                                         foreign_tax=foreign_tax,
+                                         foreign_shipping=foreign_shipping,
+                                         bd_shipping=bd_shipping,
+                                         bd_custom=bd_custom,
+                                         service_charge=service_charge,
+                                         mobile_or_bank_charge=mobile_or_bank_charge,
+
+                                         payment_status=payment_status,
                                          admin_note=new_order.admin_note,
                                          customer_note=new_order.customer_note,
                                          user=user,
