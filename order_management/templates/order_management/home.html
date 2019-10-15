@@ -9,7 +9,12 @@
           {% load crispy_forms_tags %}
           <form method="post">
             {% csrf_token %}
-            {{ form|crispy }}
+            {{ price_query_signup_form|crispy }}
+            <button class="btn btn-primary btn-block" type="submit">Submit</button>
+          </form>
+          <form method="post" action="{% url 'price-query-and-login' %}">
+            {% csrf_token %}
+            {{ price_query_login_form|crispy }}
             <button class="btn btn-primary btn-block" type="submit">Submit</button>
           </form>
           <h3 STYLE="color:red">{{ message }}</h3>

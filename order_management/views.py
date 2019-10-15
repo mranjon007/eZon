@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.forms import ModelForm
 from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import login, authenticate
 
 from .models import (
     Order,
@@ -24,7 +25,7 @@ from .models import (
 )
 
 from .forms import (
-    #PriceQueryForm,
+    PriceQueryForm,
     PriceQuerySignUpForm,
     PriceQueryLoginInForm,
     PriceQueryUpdateForm,
@@ -121,7 +122,35 @@ def homepage(request):
     return render(request, template_name='order_management/home.html', context=context)
 
 
+def price_query_login_form_view(request):
+    """View function for price Query Request"""
+    context={}
+    if request.method == 'POST':
+        price_query_login_form = PriceQueryLoginInForm(request.POST)
+        if price_query_login_form.is_valid():
+            product_url = price_query_login_form.cleaned_data['product_url']
+            customer_note = price_query_login_form.cleaned_data['customer_note']
+            email = price_query_login_form.cleaned_data['email_address']
+            password = price_query_login_form.cleaned_data['password1']
+            user = authenticate(username=email, password=password)
+            if user is not None:
+                login(request, user)
+                order = Order.objects.create(product_url=product_url,
+                                                 customer_note=customer_note,
+                                                 user=user)
+                order_processing_dates = OrderProcessingDate.objects.create(order=order,
+                                                                            status=order.status)
+                return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id': user.id}))
+            else:
+                context['message'] = "Email or Password didn't match"
+    price_query_signup_form = PriceQuerySignUpForm()
+    context['price_query_login_form'] = price_query_login_form
+    context['price_query_signup_form'] = price_query_signup_form
+    return render(request, 'order_management/home.html', context)
 
+
+def price_query_signup_form_view(request):
+    pass
 
 class AdminDashBoardView(LoginRequiredMixin, IsStaffMixin, TemplateView):
     template_name = 'order_management/admin_dashboard.html'
@@ -176,6 +205,7 @@ def update_price_query(request, pk):
     # If this is a GET (or any other method) create the default form.
     else:
         form = PriceQueryUpdateForm()
+
     context = {
         'form': form,
         'order': order,
