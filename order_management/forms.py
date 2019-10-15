@@ -14,7 +14,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 
-class PriceQueryForm(forms.Form):
+class PriceQuerySignUpForm(forms.Form):
     product_url = forms.URLField(max_length=300, required=True,
                                  widget=forms.TextInput(attrs={'placeholder': 'Product Url'}))
 
@@ -32,26 +32,30 @@ class PriceQueryForm(forms.Form):
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
                                 help_text=_("Enter the same password as above, for verification."))
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            'product_url',
-            'name',
-            'customer_note',
-            Row(
-                Column('phone_number', css_class='form-group col-md-6 mb-0'),
-                Column('email_address', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-            Row(
-                Column('password1', css_class='form-group col-md-6 mb-0'),
-                Column('password2', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-            Submit('submit', 'Sign in')
-        )
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'],
+                code='password_mismatch',
+            )
+        return password2
 
+
+class PriceQueryLoginInForm(forms.Form):
+    product_url = forms.URLField(max_length=300, required=True,
+                                 widget=forms.TextInput(attrs={'placeholder': 'Product Url'}))
+
+    customer_note = forms.CharField(max_length=500, required=False, help_text=
+                                    "Please specify product size, color, etc. if any",
+                                    widget=forms.Textarea(attrs={'placeholder': 'Customer Note'}))
+
+    email_address = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+
+    password1 = forms.CharField(label=_("Password"),
+                                widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    
 
 
 # class PriceQueryForm(forms.Form):
