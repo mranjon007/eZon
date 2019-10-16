@@ -124,6 +124,7 @@ def homepage(request):
 
 def price_query_login_form_view(request):
     """View function for price Query Request"""
+    price_query_login_form = PriceQueryLoginInForm()
     context={}
     if request.method == 'POST':
         price_query_login_form = PriceQueryLoginInForm(request.POST)
@@ -150,7 +151,42 @@ def price_query_login_form_view(request):
 
 
 def price_query_signup_form_view(request):
-    pass
+    """View function for signup with price query"""
+    context = {}
+    price_query_signup_form = PriceQuerySignUpForm()
+    if request.method == 'POST':
+        price_query_signup_form = PriceQuerySignUpForm(request.POST)
+        if price_query_signup_form.is_valid():
+            # get the cleaned order information
+            product_url = price_query_signup_form.cleaned_data['product_url']
+            name = price_query_signup_form.cleaned_data['name']
+            customer_note = price_query_signup_form.cleaned_data['customer_note']
+            email = price_query_signup_form.cleaned_data['email']
+            phone_number = price_query_signup_form.cleaned_data['phone_number']
+            password1 = price_query_signup_form.cleaned_data['password1']
+            password2 = price_query_signup_form.cleaned_data['password2']
+
+            user = CustomUser.objects.create(email=email,
+                                             name=name,
+                                             phone_number=phone_number,
+                                             )
+            # set the user password and save
+            user.set_password(password2)
+            user.save()
+            login(request, user)
+            order = Order.objects.create(product_url=product_url,
+                                         customer_note=customer_note,
+                                         user=user)
+            order_processing_dates = OrderProcessingDate.objects.create(order=order,
+                                                                        status=order.status)
+            return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id': user.id}))
+    else:
+        price_query_signup_form = PriceQuerySignUpForm()
+    price_query_login_form = PriceQueryLoginInForm()
+    context['price_query_login_form'] = price_query_login_form
+    context['price_query_signup_form'] = price_query_signup_form
+    return render(request, 'order_management/home.html', context)
+
 
 class AdminDashBoardView(LoginRequiredMixin, IsStaffMixin, TemplateView):
     template_name = 'order_management/admin_dashboard.html'

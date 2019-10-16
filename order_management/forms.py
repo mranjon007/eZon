@@ -23,7 +23,7 @@ class PriceQuerySignUpForm(forms.Form):
                                     "Please specify product size, color, etc. if any",
                                     widget=forms.Textarea(attrs={'placeholder': 'Customer Note'}))
 
-    email_address = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+    email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     phone_number = forms.CharField(max_length=14, widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}))
 
     password1 = forms.CharField(label=_("Password"),
@@ -32,15 +32,27 @@ class PriceQuerySignUpForm(forms.Form):
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
                                 help_text=_("Enter the same password as above, for verification."))
 
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if CustomUser.objects.filter(email=data).count() > 0:
+            raise forms.ValidationError("We have a user with this user email-id")
+        return data
+
+    def clean_phone_number(self):
+        data = self.cleaned_data['phone_number']
+        if CustomUser.objects.filter(phone_number=data).count() > 0:
+            raise forms.ValidationError("We have a user with this user Phone number")
+        return data
+
     def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(
-                self.error_messages['password_mismatch'],
-                code='password_mismatch',
-            )
-        return password2
+            password2 = self.cleaned_data['password2']
+            password1 = self.cleaned_data['password1']
+
+            # Check is password1 and password2 matched or not
+            if password1 != password2:
+                raise ValidationError(_('Password is not matched!'))
+            # return the cleaned data.
+            return password2
 
 
 class PriceQueryLoginInForm(forms.Form):

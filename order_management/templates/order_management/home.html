@@ -7,7 +7,7 @@
       <div class="row figure_holder h-300">
         <div class="col-12 col-md-6 my-auto">
           {% load crispy_forms_tags %}
-          <form method="post">
+          <form method="post" action="{% url 'price-query-and-signup' %}">
             {% csrf_token %}
             {{ price_query_signup_form|crispy }}
             <button class="btn btn-primary btn-block" type="submit">Submit</button>
