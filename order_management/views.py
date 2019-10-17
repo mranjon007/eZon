@@ -125,6 +125,7 @@ def homepage(request):
 def price_query_login_form_view(request):
     """View function for price Query Request"""
     context={}
+    context["from_login"] = True
     if request.method == 'POST':
         price_query_login_form = PriceQueryLoginInForm(request.POST)
         print(price_query_login_form)
