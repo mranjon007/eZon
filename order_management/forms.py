@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class PriceQuerySignUpForm(forms.Form):
     product_url = forms.URLField(max_length=300, required=True,
-                                 widget=forms.TextInput(attrs={'placeholder': 'Product Url'}))
+                                 widget=forms.TextInput(attrs={'placeholder': 'Url'}))
 
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Your Name'}) )
     customer_note = forms.CharField(max_length=500, required=False, help_text=

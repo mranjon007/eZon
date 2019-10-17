@@ -5,8 +5,17 @@
   <section class="hero_section my-5">
     <div class="container">
       <div class="row figure_holder h-300">
-        <div class="col-12 col-md-6 my-auto">
+        
+        <div class="col-12 col-md-6 my-auto shadow-lg p-3 mb-5 bg-white rounded">
           {% load crispy_forms_tags %}
+          {% if message %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ message }} 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %}
           <div>
             <form id="price_query_form" method="post" action="{% url 'price-query-and-signup' %}">
               {% csrf_token %}
@@ -52,7 +61,6 @@
             </form>
           </div>
           
-          <h3 STYLE="color:red">{{ message }}</h3>
         </div>
       </div>
     </div>

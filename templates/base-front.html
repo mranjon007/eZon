@@ -26,7 +26,7 @@
 
   <div class="front-wrapper">
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff;">
+      <nav class="navbar navbar-expand-lg navbar-light shadow-lg p-3 mb-5 bg-white rounded" style="background-color: #ffffff;">
         <div class="container">
 
           <a class="navbar-brand" href="{% url 'home' %}">
@@ -144,10 +144,21 @@
   <!-- Custom scripts for all pages-->
   <!-- Toogle -->
   <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
+  <!-- Placeholder Typing Effect -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+ 
+  
+  
 
   <script>
     $(function() {
-      
+      var typed = new Typed("#id_product_url", {
+        strings: ['Paste Product Url ', 'Paste Product Url (ex: https://amazon.com/XXX)', 'Paste Product Url (ex: https://bestbuy.com/XXX)', 'Paste Product Url (ex: https://example.com/XXX)'],
+        attr: 'placeholder',
+        typeSpeed: 40,
+        loop: true
+      });
+      // home login signup query
       var price_query_form = $('#price_query_form');
       $('#toggle-event').change(function() {
         acc_status = $(this).prop('checked');
