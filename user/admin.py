@@ -4,6 +4,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import (
     CustomUser,
+    PhoneNumberVerification,
 )
 
 
@@ -23,3 +24,6 @@ class CustomUserAdmin(UserAdmin):
     )
 
 
+@admin.register(PhoneNumberVerification)
+class PhoneNumberVerificationAdmin(admin.ModelAdmin):
+    pass
