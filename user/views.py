@@ -4,13 +4,15 @@ from .forms import CustomUserCreationForm, PhoneNumberVerificationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponseRedirect
+from .models import PhoneNumberVerification, CustomUser
 import random
-print(random.randint(1,101))
+# print(random.randint(1,101))
 
 
 class SignUp(CreateView):
     form_class = CustomUserCreationForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('home')
     template_name = 'registration/signup.html'
 
 
@@ -18,19 +20,13 @@ def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            print(user)
-            login(request, user)
-            send()
-            return redirect('phone-number-verification')
-            # username = form.cleaned_data.get('username')
-            # raw_password = form.cleaned_data.get('password1')
-            # user = authenticate(username=username, password=raw_password)
-            # user.username = username
-            # user.password = set_password(raw_password)
-            # login(request, user)
+            form.save()
+            email = form.cleaned_data.get('email')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=email, password=raw_password)
 
-            return redirect('home')
+            login(request, user)
+            return H('home')
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})

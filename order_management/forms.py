@@ -23,7 +23,7 @@ class PriceQuerySignUpForm(forms.Form):
                                     "Please specify product size, color, etc. if any",
                                     widget=forms.Textarea(attrs={'placeholder': 'Customer Note'}))
 
-    email_address = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+    email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     phone_number = forms.CharField(max_length=14, widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}))
 
     password1 = forms.CharField(label=_("Password"),
@@ -32,15 +32,27 @@ class PriceQuerySignUpForm(forms.Form):
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
                                 help_text=_("Enter the same password as above, for verification."))
 
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if CustomUser.objects.filter(email=data).count() > 0:
+            raise forms.ValidationError("We have a user with this user email-id")
+        return data
+
+    def clean_phone_number(self):
+        data = self.cleaned_data['phone_number']
+        if CustomUser.objects.filter(phone_number=data).count() > 0:
+            raise forms.ValidationError("We have a user with this user Phone number")
+        return data
+
     def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(
-                self.error_messages['password_mismatch'],
-                code='password_mismatch',
-            )
-        return password2
+            password2 = self.cleaned_data['password2']
+            password1 = self.cleaned_data['password1']
+
+            # Check is password1 and password2 matched or not
+            if password1 != password2:
+                raise ValidationError(_('Password is not matched!'))
+            # return the cleaned data.
+            return password2
 
 
 class PriceQueryLoginInForm(forms.Form):
@@ -55,35 +67,28 @@ class PriceQueryLoginInForm(forms.Form):
 
     password1 = forms.CharField(label=_("Password"),
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
-    
+
+    # def clean_email_address(self):
+    #     data = self.cleaned_data['email_address']
+    #
+    #     # Check if email is not in the past.
+    #     if data < datetime.datel.today():
+    #         raise ValidationError(_('Invalid date - renewal in past'))
+    #
+    #     # Check if a date is in the allowed range (+4 weeks from today).
+    #     if data > datetime.date.today() + datetime.timedelta(weeks=4):
+    #         raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+
+        # # Remember to always return the cleaned data.
+        # return data
 
 
-# class PriceQueryForm(forms.Form):
-#     product_url = forms.URLField(max_length=300, required=True, initial='https://')
-#     customer_note = forms.CharField(max_length=500, widget=forms.Textarea,
-#                                     required=False, help_text= "please specify product "
-#                                                                "size, color, etc. if any")
-#
-#     name = forms.CharField(max_length=100)
-#     phone_number = forms.CharField(max_length=13)
-#     email_address = forms.CharField(max_length=80)
-#
-#     password1 = forms.CharField(label=_("Password"),
-#                                 widget=forms.PasswordInput)
-#     password2 = forms.CharField(label=_("Password confirmation"),
-#                                 widget=forms.PasswordInput,
-#                                 help_text=_("Enter the same password as above, for verification."))
-#
-#
-#     def clean_password2(self):
-#         password1 = self.cleaned_data.get("password1")
-#         password2 = self.cleaned_data.get("password2")
-#         if password1 and password2 and password1 != password2:
-#             raise forms.ValidationError(
-#                 self.error_messages['password_mismatch'],
-#                 code='password_mismatch',
-#             )
-#         return password2
+class PriceQueryForm(forms.Form):
+    product_url = forms.URLField(max_length=300, required=True, initial='https://')
+    customer_note = forms.CharField(max_length=500, widget=forms.Textarea,
+                                    required=False, help_text= "please specify product "
+                                                               "size, color, etc. if any")
+
 
 
 class PriceQueryUpdateForm(forms.Form):
