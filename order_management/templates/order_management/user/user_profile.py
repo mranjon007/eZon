@@ -9,7 +9,7 @@
             <h3 class="py-3">Order Number: # {{ order.id }}</h3>
         </div>
         <div class="col-md-6 mb-0">
-            <a class="btn btn-warning py-2 float-right"><i class="fas fa-print"></i> Print Invoice</a>
+            <a class="btn btn-warning py-2">Print Invoice</a>
         </div>
       </div>
       <div class="py-3 row">
