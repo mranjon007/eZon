@@ -146,11 +146,27 @@
 
   <script>
     $(function() {
+      var price_query_form = $('#price_query_form');
       $('#toggle-event').change(function() {
-        $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+
+        acc_status = $(this).prop('checked');
+        console.log(acc_status);
+        
+        if(acc_status === false) {
+          price_query_form.attr('action', "/order/price_query_and_login");
+          $('.sign_up_form').empty();
+          $('.sign_up_form').html(' <div class="form-row"> <div class="form-group col-md-12"> {{ price_query_signup_form.email }} </div> <div class="form-group col-md-12"> {{ price_query_signup_form.password1 }} </div> </div> ' )
+        }
+        else if (acc_status == true) {
+          price_query_form.attr('action', "/order/price_query_and_signup");
+          $('.sign_up_form').empty();
+          $('.sign_up_form').html(' <div class="form-group"> {{ price_query_signup_form.name }} </div> <div class="form-row"> <div class="form-group col-md-6"> {{ price_query_signup_form.email }} </div> <div class="form-group col-md-6"> {{ price_query_signup_form.phone_number }} </div> </div> <div class="form-row"> <div class="form-group col-md-6"> {{ price_query_signup_form.password1 }} </div> <div class="form-group col-md-6"> {{ price_query_signup_form.password2 }} </div> </div> ' )
+        }
       })
+
     })
   </script>
 
 </body>
 </html>
+

@@ -21,7 +21,7 @@ class PriceQuerySignUpForm(forms.Form):
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Your Name'}) )
     customer_note = forms.CharField(max_length=500, required=False, help_text=
                                     "Please specify product size, color, etc. if any",
-                                    widget=forms.Textarea(attrs={'placeholder': 'Customer Note'}))
+                                    widget=forms.Textarea(attrs={'placeholder': 'Customer Note', 'rows': 3, 'cols': 30}))
 
     email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     phone_number = forms.CharField(max_length=14, widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}))
@@ -29,8 +29,13 @@ class PriceQuerySignUpForm(forms.Form):
     password1 = forms.CharField(label=_("Password"),
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
     password2 = forms.CharField(label=_("Password confirmation"),
-                                widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
-                                help_text=_("Enter the same password as above, for verification."))
+                                widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
+
+    
+    def __init__(self, *args, **kwargs):
+        super(PriceQuerySignUpForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False 
 
     def clean_email(self):
         data = self.cleaned_data['email']

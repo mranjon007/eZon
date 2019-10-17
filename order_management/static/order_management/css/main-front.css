@@ -8,6 +8,14 @@ body {
     box-shadow: 0 0 0 0rem rgba(0,123,255,.25);
 }
 
+/* Order Signup Login Form */
+#price_query_form {}
+#price_query_form .sign_up_form {}
+#price_query_form .sign_in_form {
+    /* display: none; */
+}
+
+
 /* Header */
 
 
