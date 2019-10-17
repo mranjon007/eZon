@@ -133,7 +133,7 @@ def price_query_login_form_view(request):
 
             product_url = price_query_login_form.cleaned_data['product_url']
             customer_note = price_query_login_form.cleaned_data['customer_note']
-            email = price_query_login_form.cleaned_data['email_address']
+            email = price_query_login_form.cleaned_data['email']
             password = price_query_login_form.cleaned_data['password1']
             user = authenticate(username=email, password=password)
             print("user .............")
