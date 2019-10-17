@@ -68,7 +68,7 @@ class PriceQueryLoginInForm(forms.Form):
                                     "Please specify product size, color, etc. if any",
                                     widget=forms.Textarea(attrs={'placeholder': 'Customer Note'}))
 
-    email_address = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+    email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
 
     password1 = forms.CharField(label=_("Password"),
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
