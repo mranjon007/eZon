@@ -124,16 +124,19 @@ def homepage(request):
 
 def price_query_login_form_view(request):
     """View function for price Query Request"""
-    price_query_login_form = PriceQueryLoginInForm()
     context={}
     if request.method == 'POST':
         price_query_login_form = PriceQueryLoginInForm(request.POST)
+        print(price_query_login_form)
+        print(price_query_login_form.is_valid())
         if price_query_login_form.is_valid():
+
             product_url = price_query_login_form.cleaned_data['product_url']
             customer_note = price_query_login_form.cleaned_data['customer_note']
             email = price_query_login_form.cleaned_data['email_address']
             password = price_query_login_form.cleaned_data['password1']
             user = authenticate(username=email, password=password)
+            print("user .............")
             if user is not None:
                 login(request, user)
                 order = Order.objects.create(product_url=product_url,
@@ -141,6 +144,7 @@ def price_query_login_form_view(request):
                                                  user=user)
                 order_processing_dates = OrderProcessingDate.objects.create(order=order,
                                                                             status=order.status)
+                print("------------"+user.phone_number)
                 return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id': user.id}))
             else:
                 context['message'] = "Email or Password didn't match"
@@ -152,6 +156,7 @@ def price_query_login_form_view(request):
 
 def price_query_signup_form_view(request):
     """View function for signup with price query"""
+    print("Helooooooooooooooooo")
     context = {}
     price_query_signup_form = PriceQuerySignUpForm()
     if request.method == 'POST':
