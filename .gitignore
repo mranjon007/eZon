@@ -90,4 +90,5 @@ db.sqlite3
 
 .venv
 venv
-.idea/workspace.xml
+.idea
+.idea/*

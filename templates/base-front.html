@@ -146,12 +146,10 @@
 
   <script>
     $(function() {
+      
       var price_query_form = $('#price_query_form');
       $('#toggle-event').change(function() {
-
         acc_status = $(this).prop('checked');
-        console.log(acc_status);
-        
         if(acc_status === false) {
           price_query_form.attr('action', "/order/price_query_and_login");
           $('.sign_up_form').empty();
