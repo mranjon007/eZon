@@ -7,7 +7,11 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 import random
+from zeep import Client
+
 from .models import (
     PhoneNumberVerification,
     CustomUser,
@@ -37,6 +41,25 @@ def signup(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            verification_instance = PhoneNumberVerification.objects.filter(user=user).first()
+            if verification_instance.is_verified is not True:
+                return redirect(reverse('verify-phone-number', kwargs={'user_id': user.id}))
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
+
 
 
 @login_required
@@ -100,6 +123,7 @@ def update_user_profile(request):
 def verify_phone_number(request, user_id):
     context = {}
     user = CustomUser.objects.filter(id=user_id).first()
+    print("---------- "+user.phone_number)
     context['user'] = user
     verification_instance = PhoneNumberVerification.objects.filter(user=user).first()
 
@@ -107,8 +131,8 @@ def verify_phone_number(request, user_id):
         form = PhoneNumberVerificationForm()
         context['form'] = form
         if verification_instance is None or verification_instance.count < 5:
-            #code = random.randint(1000, 9999)
-            code = 4444
+            code = random.randint(1000, 9999)
+            print(code)
             verification_instance, is_created =\
                 PhoneNumberVerification.objects.get_or_create(user=user,
                                                               )
@@ -117,6 +141,7 @@ def verify_phone_number(request, user_id):
             # is_sent = send_verificaiton_code(user.phone_number)
             verification_instance.count += 1
             verification_instance.save()
+            #send_code(user_id)
         else:
             context['message'] = "We sent verification code to your phone for 5 times already. Please Call eZon support for more information"
         return render(request, template_name='user/phone_number_verification.html',
@@ -129,6 +154,7 @@ def verify_phone_number(request, user_id):
             if str(verification_instance.verification_code) == verification_code:
                 login(request, user)
                 verification_instance.is_verified = True
+                verification_instance.save()
                 return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id': user.id}))
             else:
                 context["message"] = "Code is not match"
@@ -137,7 +163,18 @@ def verify_phone_number(request, user_id):
                               context=context)
 
 
-# def send_code(request, )
+def send_code(user_id, phone_number, code):
+    url = 'https://api2.onnorokomsms.com/sendsms.asmx?WSDL'
+    client = Client(url)
+    user_name = '01680139372'
+    password = 'Life@123!'
+    recipient_number = phone_number
+    sms_text = str(code)
+    sms_type = 'TEXT'
+    mask_name = ''
+    campaign_name = ''
+    response = client.service.OneToOne(user_name, password, recipient_number, sms_text, sms_type, mask_name, campaign_name)
+    print(response)
 
 
 
