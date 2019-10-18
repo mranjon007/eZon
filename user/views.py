@@ -32,6 +32,10 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
+def user_profile(request):
+    pass
+
+
 def verify_phone_number(request, user_id):
     context = {}
     user = CustomUser.objects.filter(id=user_id).first()
@@ -73,4 +77,6 @@ def verify_phone_number(request, user_id):
 
 
 # def send_code(request, )
+
+
 
