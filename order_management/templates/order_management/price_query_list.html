@@ -1,12 +1,13 @@
 {% extends 'base-admin.html' %}
 
 {% block content %}
+  <div class="container">
     <h2 class="h2">Price Queries</h2>
     {% if order_list %}
     <table class="table table">
       <thead>
         <tr>
-          <th scope="col">order Number</th>
+          <th scope="col">Order Number</th>
           <th scope="col">Update</th>
         </tr>
       </thead>
@@ -22,4 +23,5 @@
     {% else %}
         <h3 class="h3">There is no price query available now.</h3>
     {% endif %}
+  </div>
 {% endblock %}
