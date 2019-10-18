@@ -50,7 +50,7 @@
                   <a class="dropdown-item" href="{% url 'admin-dashboard' %}"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
                   {% else %}
                   <a class="dropdown-item" href="{% url 'user-dashboard' user_id=user.id %}"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
-                  <a class="dropdown-item" href="{% url 'user-profile' user_id=user.id %}"><i class="fas fa-fw fa-user-circle"> </i>Profile</a>
+                  <a class="dropdown-item" href="{% url 'user-profile' %}"><i class="fas fa-fw fa-user-circle"> </i>Profile</a>
                   {% endif %}
                   
                   <div class="dropdown-divider"></div>
@@ -183,6 +183,7 @@
             opacity: 1,
             height: "toggle"
           });
+          $('[name="product_url"]').focus();
         }
         else if (acc_status == true) {
           price_query_form.attr('action', "/order/price_query_and_signup");
@@ -196,6 +197,7 @@
             opacity: 1,
             height: "toggle"
           });
+          $('[name="product_url"]').focus();
         }
       })
 
