@@ -127,7 +127,6 @@ def update_user_profile(request):
 def verify_phone_number(request, user_id):
     context = {}
     user = CustomUser.objects.filter(id=user_id).first()
-    print("---------- "+user.phone_number)
     context['user'] = user
     verification_instance = PhoneNumberVerification.objects.filter(user=user).first()
 
@@ -140,6 +139,7 @@ def verify_phone_number(request, user_id):
             verification_instance, is_created =\
                 PhoneNumberVerification.objects.get_or_create(user=user,
                                                               )
+            # if already verified don't need to send code or show this page
 
             verification_instance.verification_code = code
             # is_sent = send_verificaiton_code(user.phone_number)
