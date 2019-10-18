@@ -8,3 +8,7 @@ body {
 .form-control:focus {
     box-shadow: 0 0 0 0rem rgba(0,123,255,.25);
 }
+
+.sidebar-brand-text {
+    text-transform: none;
+}
