@@ -36,14 +36,14 @@ body {
 
 .hero_section .figure_holder {
     background: url('/static/order_management/img/deliveries_ezon.svg') no-repeat right top;
-    background-size: 480px auto;
-    min-height: 360px;
+    background-size: 580px auto;
+    min-height: 430px;
 }
 @media (max-width: 991.98px) {
     .hero_section .figure_holder {
         min-height: 460px;
-        background-position: right 0px;
-        background-size: 360px auto;
+        background-position: 165% 80%;
+        background-size: 75% auto;
     }
 }
 
