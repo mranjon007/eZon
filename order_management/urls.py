@@ -36,14 +36,12 @@ from .views import (
 urlpatterns = [
     path('', homepage, name='home'),
     path('price_query_and_login', price_query_login_form_view, name='price-query-and-login'),
-    # view is not done
     path('price_query_and_signup', price_query_signup_form_view, name='price-query-and-signup'),
-
-    path('admin_dashboard/', AdminDashBoardView.as_view(), name='admin-dashboard'),
-
     path('user_dashboard/<int:user_id>', user_dashboard, name='user-dashboard'),
     path('user_dashboard/order/<int:primary_key>', user_order_detail_view, name='user-order-detail'),
 
+
+    path('admin_dashboard/', AdminDashBoardView.as_view(), name='admin-dashboard'),
     path('price_query_list/', PriceQueryListView.as_view(), name='price-query-list'),
     path('price_query_update/<pk>/', update_price_query, name='price-query-update'),
     path('price_query_submitted_list/', PriceQuerySubmittedList.as_view(), name='price-query-submitted-list'),

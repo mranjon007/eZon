@@ -14,6 +14,18 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
 
+class CustomUserProfile(models.Model):
+    address_line_1 = models.CharField('Address Line 1', max_length=200, null=True, blank=True,
+                                               help_text='Enter Your Appartment Number/House Number')
+    address_line_2 = models.CharField('Address Line 2', max_length=300, null=True, blank=True,
+                                               help_text="Enter Your Street Address")
+    city = models.CharField(max_length=50, null=True, blank=True)
+    district = models.CharField(max_length=50, null=True, blank=True)
+    postcode = models.CharField(max_length=50, null=True, blank=True)
+    country = models.CharField(max_length=50, null=True, blank=True)
+
+
+
 class PhoneNumberVerification(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
     verification_code = models.PositiveIntegerField(validators=[MinValueValidator(1000), MaxValueValidator(9999)], null=True)
