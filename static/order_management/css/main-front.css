@@ -6,13 +6,23 @@ body {
 
 .form-control:focus {
     box-shadow: 0 0 0 0rem rgba(0,123,255,.25);
+    border-color: #f79b34;
+}
+.form-group {
+    margin-bottom: .7rem;
 }
 
 /* Order Signup Login Form */
 #price_query_form {}
-#price_query_form .sign_up_form {}
-#price_query_form .sign_in_form {
-    /* display: none; */
+#price_query_form .submit_query {
+    color: #333;
+    background-color: #f79b34;
+    border-color: #f38000;
+}
+#price_query_form .submit_query:hover {
+    color: #333;
+    background-color: #f38000;
+    border-color: #f38000;
 }
 
 
@@ -25,7 +35,7 @@ body {
 
 
 .hero_section .figure_holder {
-    background: url('/static/order_management/img/undraw_deliveries_131a.svg') no-repeat right top;
+    background: url('/static/order_management/img/deliveries_ezon.svg') no-repeat right top;
     background-size: 480px auto;
     min-height: 360px;
 }
