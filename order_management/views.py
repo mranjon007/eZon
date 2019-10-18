@@ -34,7 +34,6 @@ from .forms import (
     ProductPurchaseCancelForm,
     ProductSendToDeliveryForm,
     ProductDeliveryCancelFrom,
-
 )
 
 from .CustomMixin import (

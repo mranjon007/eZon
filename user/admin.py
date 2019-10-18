@@ -5,6 +5,7 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import (
     CustomUser,
     PhoneNumberVerification,
+    CustomUserProfile,
 )
 
 
@@ -27,3 +28,9 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(PhoneNumberVerification)
 class PhoneNumberVerificationAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(CustomUserProfile)
+class CustomUserProfileAdmin(admin.ModelAdmin):
+    pass
+

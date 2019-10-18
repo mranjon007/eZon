@@ -15,6 +15,8 @@ class CustomUser(AbstractUser):
 
 
 class CustomUserProfile(models.Model):
+    user = models.OneToOneField(get_user_model(), on_delete=models.SET_NULL,
+                             null=True, blank=True)
     address_line_1 = models.CharField('Address Line 1', max_length=200, null=True, blank=True,
                                                help_text='Enter Your Appartment Number/House Number')
     address_line_2 = models.CharField('Address Line 2', max_length=300, null=True, blank=True,
@@ -22,12 +24,10 @@ class CustomUserProfile(models.Model):
     city = models.CharField(max_length=50, null=True, blank=True)
     district = models.CharField(max_length=50, null=True, blank=True)
     postcode = models.CharField(max_length=50, null=True, blank=True)
-    country = models.CharField(max_length=50, null=True, blank=True)
-
 
 
 class PhoneNumberVerification(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    user = models.OneToOneField(get_user_model(), on_delete=models.SET_NULL, null=True)
     verification_code = models.PositiveIntegerField(validators=[MinValueValidator(1000), MaxValueValidator(9999)], null=True)
     count = models.PositiveIntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)], null=True)
     is_verified = models.BooleanField(default=False)

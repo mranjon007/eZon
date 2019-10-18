@@ -5,10 +5,17 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
-from .models import PhoneNumberVerification, CustomUser
 from django.urls import reverse
+from django.contrib.auth.decorators import permission_required, login_required
 import random
-# print(random.randint(1,101))
+from .models import (
+    PhoneNumberVerification,
+    CustomUser,
+    CustomUserProfile,
+)
+from .forms import (
+    CustomUserProfileForm
+)
 
 
 class SignUp(CreateView):
@@ -32,8 +39,62 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-def user_profile(request):
-    pass
+@login_required
+def update_user_profile(request):
+    context = {}
+    user = request.user
+    profile, is_created = CustomUserProfile.objects.get_or_create(user=user)
+
+    if request.method == 'POST':
+        form = CustomUserProfileForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            address_line_1 = form.cleaned_data.get('address_line_1')
+            address_line_2 = form.cleaned_data.get('address_line_2')
+            city = form.cleaned_data.get('city')
+            district = form.cleaned_data.get('district')
+            postcode = form.cleaned_data.get('postcode')
+
+            # update name of the user
+            custom_user = CustomUser.objects.filter(id=user.id).first()
+            custom_user.name = name
+            custom_user.save()
+
+            # update CustomUserProfile
+            profile.address_line_1 = address_line_1
+            profile.address_line_2 = address_line_2
+            profile.city = city
+            profile.district = district
+            profile.postcode = postcode
+            profile.save()
+
+            form = CustomUserProfileForm(initial={
+                'email': custom_user.email,
+                'name': custom_user.name,
+                'phone_number': custom_user.phone_number,
+                'address_line_1': profile.address_line_1,
+                'address_line_2': profile.address_line_2,
+                'city': profile.city,
+                'district': profile.district,
+                'postcode': profile.postcode}
+            )
+            context['form'] = form
+            context['message'] = "Updated Successfully"
+            return render(request, 'user/user_profile.html', context=context)
+    else:
+        form = CustomUserProfileForm(initial={
+                                     'email': user.email,
+                                     'name': user.name,
+                                     'phone_number': user.phone_number,
+                                     'address_line_1': profile.address_line_1,
+                                     'address_line_2': profile.address_line_2,
+                                     'city': profile.city,
+                                     'district': profile.district,
+                                     'postcode': profile.postcode}
+                                     )
+        print(form)
+        context['form'] = form
+    return render(request, 'user/user_profile.html', context=context)
 
 
 def verify_phone_number(request, user_id):
