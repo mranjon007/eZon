@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
-from .models import CustomUser
+from .models import CustomUser, CustomUserProfile
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -19,24 +19,18 @@ class CustomUserChangeForm(UserChangeForm):
         fields = UserChangeForm.Meta.fields
 
 
-class CustomAuthenticationForm(AuthenticationForm):
-
-    def confirm_login_allowed(self, user):
-
-        if not user.is_active or not user.is_validated:
-            raise forms.ValidationError('There was a problem with your login.', code='invalid_login')
-
-
 class PhoneNumberVerificationForm(forms.Form):
     verification_code = forms.CharField(max_length=4, help_text="Enter the verification code sent to your mobile number")
-    # def clean_customer_email_address(self):
-    #     email = self.cleaned_data['customer_email_address']
-    #     if CustomUser.objects.get(email=email):
-    #         raise ValidationError(_("this email is already exist"))
-    #     # Remember to always return the cleaned data.
-    #     return email
-    #
-    # def clean_customer_phone_number(self):
-    #     phone_number = self.cleaned_data['customer_phone_number']
-    #     if CustomUser.objects.filter(phone_number=phone_number):
-    #         raise ValidationError(_('this phone number is already exist'))
+
+
+class CustomUserProfileForm(forms.Form):
+    name = forms.CharField(max_length=200, help_text='User Name')
+    email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'readonly': 'True'}))
+    phone_number = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'readonly': 'True'}))
+    address_line_1 = forms.CharField(max_length=200, required=False,
+                                      help_text='Enter Your Apartment Number/House Number')
+    address_line_2 = forms.CharField(max_length=300, required=False,
+                                      help_text="Enter Your Street Address")
+    city = forms.CharField(max_length=50, help_text="Enter Your City")
+    district = forms.CharField(max_length=50, required=False)
+    postcode = forms.CharField(max_length=50, required=False)
