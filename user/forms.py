@@ -31,6 +31,6 @@ class CustomUserProfileForm(forms.Form):
                                       help_text='Enter Your Apartment Number/House Number')
     address_line_2 = forms.CharField(max_length=300, required=False,
                                       help_text="Enter Your Street Address")
-    city = forms.CharField(max_length=50, help_text="Enter Your City")
+    city = forms.CharField(max_length=50, help_text="Enter Your City", required=False)
     district = forms.CharField(max_length=50, required=False)
     postcode = forms.CharField(max_length=50, required=False)
