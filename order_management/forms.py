@@ -20,8 +20,8 @@ class PriceQuerySignUpForm(forms.Form):
 
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Your Name'}) )
     customer_note = forms.CharField(max_length=500, required=False, help_text=
-                                    "Please specify product size, color, etc. if any",
-                                    widget=forms.Textarea(attrs={'placeholder': 'Customer Note', 'rows': 3, 'cols': 30}))
+                                    "Please specify product size, color, etc. Max 500 characters",
+                                    widget=forms.Textarea(attrs={'placeholder': 'Customer Note', 'rows': 2, 'cols': 30}))
 
     email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     phone_number = forms.CharField(max_length=14, widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}))

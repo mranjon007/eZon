@@ -47,10 +47,10 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.name }}</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown07">
                   {% if user.is_staff %} 
-                  <a class="dropdown-item" href="{% url 'admin-dashboard' %}">Dashboard</a>
+                  <a class="dropdown-item" href="{% url 'admin-dashboard' %}"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
                   {% else %}
-                  <a class="dropdown-item" href="{% url 'user-dashboard' user_id=user.id %}">Dashboard</a>
-                  <a class="dropdown-item" href="#">Profile</a>
+                  <a class="dropdown-item" href="{% url 'user-dashboard' user_id=user.id %}"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
+                  <a class="dropdown-item" href="{% url 'user-profile' user_id=user.id %}"><i class="fas fa-fw fa-user-circle"> </i>Profile</a>
                   {% endif %}
                   
                   <div class="dropdown-divider"></div>
@@ -62,8 +62,12 @@
               </li>
               {% else %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">login</a>
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
               </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'signup' %}">Create an Account</a>
+              </li>
+              
               {% endif %}
             </ul>
           </div>
@@ -158,6 +162,10 @@
         typeSpeed: 40,
         loop: true
       });
+
+      // focus cursor on page load
+      $('[name="product_url"]').focus();
+      
       // home login signup query
       var price_query_form = $('#price_query_form');
       $('#toggle-event').change(function() {
