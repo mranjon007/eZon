@@ -69,6 +69,7 @@ def user_dashboard(request, user_id):
                                                    status=new_order.status)
             order_list = Order.objects.filter(user=user).all()
             context['order_list'] = order_list
+            context['message'] = "Submitted Successfully"
             return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id': user_id}))  # user-dashboard e return korbe
     else:
         form = PriceQueryForm()
