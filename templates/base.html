@@ -45,14 +45,14 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.name }}</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown07">
-                  {% if user %} 
-                  
+                  {% if user.is_staff %} 
+                  <a class="dropdown-item" href="{% url 'admin-dashboard' %}"><i class="fas fa-fw fa-align-left"></i> Admin Dashboard</a>
+                  {% else %}
                   <a class="dropdown-item" href="{% url 'user-dashboard' %}"><i class="fas fa-fw fa-align-left"></i> My Requests</a>
                   <a class="dropdown-item" href="{% url 'user-profile' %}"><i class="fas fa-fw fa-user-circle"> </i> My Profile</a>
                   <a class="dropdown-item" href="#"><i class="fas fa-fw fa-dollar-sign"></i> My Transections</a>
                   <a class="dropdown-item" href="#"><i class="fas fa-fw fa-bell"></i> My Notifications</a>
                   {% endif %}
-                  
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'logout' %}">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
