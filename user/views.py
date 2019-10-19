@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm, PhoneNumberVerificationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
@@ -50,6 +50,7 @@ def login_view(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
+            #logout(user)
             # verification part
             verification_instance = PhoneNumberVerification.objects.filter(user=user).first()
             if verification_instance is None:
@@ -57,7 +58,7 @@ def login_view(request):
             if verification_instance is not None and verification_instance.is_verified is not True:
                 return redirect(reverse('verify-phone-number', kwargs={'user_id': user.id}))
 
-            if user is not None:
+            if user is not None and verification_instance.is_verified == True:
                 login(request, user)
                 return redirect('home')
     else:
@@ -145,7 +146,7 @@ def verify_phone_number(request, user_id):
             # is_sent = send_verificaiton_code(user.phone_number)
             verification_instance.count += 1
             verification_instance.save()
-            send_code(phone_number=user.phone_number, code=verification_instance.verification_code)
+            #send_code(phone_number=user.phone_number, code=verification_instance.verification_code)
         else:
             context['message'] = "We sent verification code to your phone for 5 times already. Please Call eZon support for more information"
 
@@ -158,7 +159,7 @@ def verify_phone_number(request, user_id):
                 login(request, user)
                 verification_instance.is_verified = True
                 verification_instance.save()
-                return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id': user.id}))
+                return HttpResponseRedirect(reverse('user-dashboard'))
             else:
                 context["message"] = "Code is not match"
                 context["form"] = form

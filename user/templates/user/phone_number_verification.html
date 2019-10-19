@@ -9,7 +9,7 @@
       {{ form|crispy }}
       <button class="btn btn-primary" type="submit">Submit</button>
     </form>
-    <a href="#" class="btn btn-primary">Send code again</a>
+    <a href="{% url 'verify-phone-number' user_id=user.id%}" class="btn btn-primary">Send code again</a>
     <h3 STYLE="color:red">{{ message }}</h3>
 
 {% endblock %}
