@@ -71,7 +71,8 @@ def user_dashboard(request):
             order_list = Order.objects.filter(user=user).all()
             context['order_list'] = order_list
             context['message'] = "Submitted Successfully"
-            return HttpResponseRedirect(reverse('user-dashboard'))
+            return render(request, template_name='order_management/user/user_dashboard.html', context=context)
+
     else:
         form = PriceQueryForm()
         context['form'] = form
