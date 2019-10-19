@@ -1,9 +1,8 @@
 body {
     padding-top: 0px;
 }
-.test {
-    display: none;
-}
+.body-wrapper {}
+.front-wrapper {}
 
 .form-control:focus {
     box-shadow: 0 0 0 0rem rgba(0,123,255,.25);
@@ -11,4 +10,59 @@ body {
 
 .sidebar-brand-text {
     text-transform: none;
+}
+.form-group {
+    margin-bottom: .7rem;
+}
+
+
+.front-wrapper .dropdown-menu {
+    min-width: 13rem;
+    padding: .5rem 0;
+    margin: .5rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgb(253, 253, 253);
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0rem 3rem 3rem rgba(0,0,0,.175)!important;
+}
+
+/* Header */
+
+
+
+/* Content */
+.hero_section {}
+
+
+.hero_section .figure_holder {
+    background: url('/static/order_management/img/deliveries_ezon.svg') no-repeat right top;
+    background-size: 580px auto;
+    min-height: 430px;
+}
+@media (max-width: 991.98px) {
+    .hero_section .figure_holder {
+        min-height: 460px;
+        background-position: 165% 80%;
+        background-size: 75% auto;
+    }
+}
+
+/* Footer */
+footer {
+    background-color: #EFF2F5;
+    font-size: 0.875rem;
+}
+.footer a {
+    color: #526b84;
+}
+.footer li {
+    margin-bottom: 0.5rem;
+}
+.footer .col-heading {
+    font-size: 1.25rem;
 }

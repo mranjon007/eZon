@@ -90,9 +90,9 @@ class PriceQueryLoginInForm(forms.Form):
 
 class PriceQueryForm(forms.Form):
     product_url = forms.URLField(max_length=300, required=True, initial='https://')
-    customer_note = forms.CharField(max_length=500, widget=forms.Textarea,
-                                    required=False, help_text= "please specify product "
-                                                               "size, color, etc. if any")
+    customer_note = forms.CharField(max_length=500, required=False, help_text=
+                                    "Please specify product size, color, etc. Max 500 characters",
+                                    widget=forms.Textarea(attrs={'placeholder': 'Customer Note', 'rows': 3, 'cols': 60}))
 
 
 

@@ -5,36 +5,212 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <title>eZon Admin</title>
+  <title>eZon | {% block title %} Home {% endblock %}</title>
 
   <!-- Custom fonts for this template-->
-  <link rel="stylesheet" href="{% static 'order_management/css/fa-all.min.css' %}">
+  <script src="https://kit.fontawesome.com/7889a03bc2.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Toggle -->
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
+  <!-- SB ADmin styles for this template-->
   <link rel="stylesheet" href="{% static 'order_management/css/sb-admin-2.min.css' %}">
+  <!-- Custom styles for this template-->
   <link rel="stylesheet" href="{% static 'order_management/css/main.css' %}">
 
-</head>
-<body class="bg-gradient-primary">
+  <!-- Tidio Chat Plugin -->
+  <script src="//code.tidio.co/jbupbdoq0x3slf3wtuwsvawa3pkigra0.js"></script>
 
-  <div class="container">
+</head>
+<body class="body-wrapper">
+
+  <div class="front-wrapper">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light shadow-lg p-3 mb-5 bg-white rounded" style="background-color: #ffffff;">
+        <div class="container">
+
+          <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'order_management/img/logo-320.png' %}" width="60" height="auto" alt="">
+          </a>
+
+          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="navbar-collapse collapse" id="navbarsExample07" style="">
+            <ul class="navbar-nav ml-lg-auto">
+              <li class="nav-item active">  
+                <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-fw fa-home"></i> Home <span class="sr-only">(current)</span></a>
+              </li>
+              {% if user.is_authenticated %} 
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.name }}</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown07">
+                  {% if user %} 
+                  
+                  <a class="dropdown-item" href="{% url 'user-dashboard' user_id=user.id %}"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
+                  <a class="dropdown-item" href="{% url 'user-profile' %}"><i class="fas fa-fw fa-user-circle"> </i>Profile</a>
+                  {% endif %}
+                  
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-fw fa-sign-in-alt"></i> Login</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'signup' %}"><i class="fas fa-fw fa-user-plus"></i> Create an Account</a>
+              </li>
+              
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <!-- Page Heading -->
+      {% block page-heading %} 
+      {% endblock %}
+    </div>
+    
 
     <!-- Content Row -->
     {% block content %}
     {% endblock %}
 
+    <footer class="footer">
+      <div class="container mt-5 py-5 mb-3">
+        <div class="row">
+          <div class="footer-col col-6 col-lg-3">
+            <h4 class="col-heading">About eZon</h4>
+            <ul class="list-unstyled">
+              <li><a href="#">Our Story</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Jobs</a></li>
+              
+            </ul>
+          </div><!--//footer-col-->
+          <div class="footer-col col-6 col-lg-3">
+            <h4 class="col-heading">Resources</h4>
+            <ul class="list-unstyled">
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Developer APIs</a></li>
+            </ul>
+          </div><!--//footer-col-->
+          <div class="footer-col col-6 col-lg-3">
+            <h4 class="col-heading">Legal</h4>
+            <ul class="list-unstyled">
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Terms of Services</a></li>
+              <li><a href="#">Security</a></li>
+            </ul>
+          </div><!--//footer-col-->
+          <div class="footer-col col-6 col-lg-3">
+            <h4 class="col-heading py-2"><i class="fas fa-fw fa-phone"></i> +8801821081270</h4>
+
+            <div class="social-icons"> 
+              <a class="btn btn-outline-primary" href="https://www.facebook.com/eZon.Com.bd"><i class="fab fa-facebook-f"></i> Facebook</a>
+              <a class="btn btn-outline-primary" href="https://www.facebook.com/"><i class="fab fa-facebook-messenger"></i> Messenger</a>
+            </div>
+                
+            <div class="mb-2 my-1">
+              124/1, New Kakrail Road, Shantinagar, 
+              Dhaka, Bangladesh 1219
+            </div>
+            <div>
+              <a href="#">hello@yourcompany.com</a>
+            </div>
+                
+          </div><!--//footer-col-->
+        </div><!--//row-->
+      </div><!--//container-->
+      <div class="container">
+        <hr>
+      </div>
+      
+      <div class="footer-bottom text-center py-3">
+          <small class="copyright">Copyright © <a href="#" target="_blank">eZon</a></small>
+      </div>
+    
+    </footer>
+
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="{% static 'order_management/js/jquery.min.js' %}"></script>
-  <script src="{% static 'order_management/js/bootstrap.bundle.min.js' %}"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="{% static 'order_management/js/jquery.easing.min.js' %}"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="{% static 'order_management/js/sb-admin-2.min.js' %}"></script>
+  <!-- Toogle -->
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
+  <!-- Placeholder Typing Effect -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+ 
+  
+  
+
+  <script>
+    $(function() {
+      var typed = new Typed("#id_product_url", {
+        strings: ['Paste Product Url ', 'Paste Product Url (ex: https://amazon.com/XXX)', 'Paste Product Url (ex: https://bestbuy.com/XXX)', 'Paste Product Url (ex: https://example.com/XXX)'],
+        attr: 'placeholder',
+        typeSpeed: 40,
+        loop: true
+      });
+
+      // focus cursor on page load
+      $('[name="product_url"]').focus();
+      
+      // home login signup query
+      var price_query_form = $('#price_query_form');
+      $('#toggle-event').change(function() {
+        acc_status = $(this).prop('checked');
+        if(acc_status === false) {
+          price_query_form.attr('action', "/order/price_query_and_login");
+          $('.sign_up_form').animate({
+            opacity: 0.25,
+            height: "toggle"
+          });
+          $('.sign_up_form').empty();
+          $('.sign_up_form').html(' <div class="form-row"> <div class="form-group col-md-6"> {{ price_query_signup_form.email }} </div> <div class="form-group col-md-6"> {{ price_query_signup_form.password1 }} </div> </div> ' )
+          $('.sign_up_form').animate({
+            opacity: 1,
+            height: "toggle"
+          });
+          $('[name="product_url"]').focus();
+        }
+        else if (acc_status == true) {
+          price_query_form.attr('action', "/order/price_query_and_signup");
+          $('.sign_up_form').animate({
+            opacity: 0.25,
+            height: "toggle"
+          });
+          $('.sign_up_form').empty();
+          $('.sign_up_form').html(' <div class="form-group"> {{ price_query_signup_form.name }} </div> <div class="form-row"> <div class="form-group col-md-6"> {{ price_query_signup_form.email }} </div> <div class="form-group col-md-6"> {{ price_query_signup_form.phone_number }} </div> </div> <div class="form-row"> <div class="form-group col-md-6"> {{ price_query_signup_form.password1 }} </div> <div class="form-group col-md-6"> {{ price_query_signup_form.password2 }} </div> </div> ' )
+          $('.sign_up_form').animate({
+            opacity: 1,
+            height: "toggle"
+          });
+          $('[name="product_url"]').focus();
+        }
+      })
+
+    })
+  </script>
 
 </body>
 </html>

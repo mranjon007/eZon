@@ -1,20 +1,22 @@
-{% extends 'base-user.html' %}
+{% extends 'base.html' %}
 
 {% block title %} User Dashboard {% endblock %}
 
 {% block page-heading %} 
-
-<a class="btn btn-primary" href="#" data-toggle="modal" data-target="#PriceQueryModal">
-  <i class="fas fa-search-plus fa-sm fa-fw mr-2 text-gray-400"></i> New Query
-</a>
-
+  
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Welcome, {{ user.name }}</h1>
+    <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#PriceQueryModal">
+      <i class="fas fa-search-plus fa-sm fa-fw mr-2 text-gray-400"></i> New Query
+    </a>
+  </div>
 {% endblock %}
 
 {% block content %}
 
-<div class="col-12 col-md-12 my-auto">
+<div class="container py-3">
   
-<!-- PriceQueryModal -->
+  <!-- PriceQueryModal -->
   <div class="modal fade" id="PriceQueryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -34,42 +36,52 @@
               </form>
             </div>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
       </div>
     </div>
   </div>
   
   
-  <h2 class="h2">Price Queries</h2>
-  {% if order_list %}
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Order Number</th>
-          <th scope="col">Current Status</th>
-          <th scope="col">Submission Date</th>
-          <th scope="col">Update</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for order in order_list %}
-        <tr> 
-            <td scope="row"> <a href="{% url 'user-order-detail' order.id %}"> <b># {{ order.get_order_number }}</b></a> </td>
-            <td scope="row">{{ order.get_status_display }}</td>
-            <td scope="row">{{ order.order_status_dates.all.last.date }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <h5>Your Recent Price Queries</h5>
+  <div class="row justify-content-md-left mb-2">
+    <div class="col col-lg-8 col-md-12 my-auto shadow-lg p-3 mb-5 bg-white rounded">
+      {% if message %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ message }} 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+
+      {% if order_list %}
+      <div class="table-responsive table-sm py-1">
+        <table class="table table-bordered table-hover rounded">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Order Number</th>
+              <th scope="col">Current Status</th>
+              <th scope="col">Submission Date</th>
+              <th scope="col">Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in order_list %}
+            <tr> 
+                <td scope="row"> <a href="{% url 'user-order-detail' order.id %}"> <b># {{ order.get_order_number }}</b></a> </td>
+                <td scope="row">{{ order.get_status_display }}</td>
+                <td scope="row">{{ order.order_status_dates.all.last.date }}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+          <h3 class="h3">There is no price query available now.</h3>
+      {% endif %}
+    </div>
   </div>
-  {% else %}
-      <h3 class="h3">There is no price query available now.</h3>
-  {% endif %}
-  <h3 STYLE="color:red">{{ message }}</h3>
+  
 </div>
 
 
