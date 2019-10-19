@@ -146,7 +146,7 @@ def verify_phone_number(request, user_id):
             # is_sent = send_verificaiton_code(user.phone_number)
             verification_instance.count += 1
             verification_instance.save()
-            #send_code(phone_number=user.phone_number, code=verification_instance.verification_code)
+            send_code(phone_number=user.phone_number, code=verification_instance.verification_code)
         else:
             context['message'] = "We sent verification code to your phone for 5 times already. Please Call eZon support for more information"
 
