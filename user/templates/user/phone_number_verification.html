@@ -2,18 +2,7 @@
 {% block title %} Verify Your Phone Number {% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
-    {% load crispy_forms_tags %}
 
-    <h2>Verify Phone Number</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <button class="btn btn-primary" type="submit">Submit</button>
-    </form>
-    <a href="{% url 'verify-phone-number' user_id=user.id%}" class="btn btn-primary">Send code again</a>
-    <h3 STYLE="color:red">{{ message }}</h3>
-=======
 <div class="container">
   <div class="row  h-360">
     
@@ -27,7 +16,7 @@
         </button>
       </div>
       {% endif %}
-      <form id="price_query_form" method="post" action="{% url 'price-query-and-signup' %}">
+      <form id="price_query_form" method="post">
         {% load crispy_forms_tags %}
         {% csrf_token %}
         <div class="form-group row">
@@ -44,6 +33,5 @@
     </div>
   </div>
 </div>
->>>>>>> 4af189271df6176e256fbba220d2f5c438fc25fb
 
 {% endblock %}
