@@ -55,9 +55,10 @@ def is_tuple_member(a_tuple, member):
 ######### User #########
 
 @login_required
-def user_dashboard(request, user_id):
+def user_dashboard(request):
+    user = request.user
+    user_id = user.id
     context = {}
-    user = CustomUser.objects.get(id=user_id)
     if request.method == 'POST':
         form = PriceQueryForm(request.POST)
         if form.is_valid():
@@ -70,7 +71,7 @@ def user_dashboard(request, user_id):
             order_list = Order.objects.filter(user=user).all()
             context['order_list'] = order_list
             context['message'] = "Submitted Successfully"
-            return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id': user_id}))  # user-dashboard e return korbe
+            return HttpResponseRedirect(reverse('user-dashboard'))
     else:
         form = PriceQueryForm()
         context['form'] = form
@@ -88,37 +89,12 @@ def user_order_detail_view(request, primary_key):
 
 ########## END_USER ##########
 
-# def homepage(request):
-#     context = {}
-#     if request.method == 'POST':
-#         if request.user.is_authenticated:
-#             form = PriceQueryForm(request.POST)
-#             if form.is_valid():
-#                 order = Order()
-#                 order.product_url = form.cleaned_data['product_url']
-#                 # if form.cleaned_data['product_company']:
-#                 #     order.product_company = form.cleaned_data['product_company']
-#                 order.user = request.user
-#                 new_order = Order.objects.create(product_url=order.product_url,
-#                                                  #product_country=order.product_company,
-#                                                  user=order.user)
-#                 new_order_processing_dates = \
-#                     OrderProcessingDate.objects.create(order=new_order,
-#                                                        status=new_order.status)
-#                 return HttpResponseRedirect(reverse('signup'))  # user-dashboard e return korbe
-#         else:
-#             context['message'] = 'Please Login/Register to place a product price Query'
-#
-#     form = PriceQueryForm()
-#     # print(form)
-#     context['form'] = form
-#     return render(request, template_name='order_management/home.html', context=context)
-
 
 def homepage(request):
     context = {}
     context['price_query_signup_form'] = PriceQuerySignUpForm()
     context['price_query_login_form'] = PriceQueryLoginInForm()
+    context['price_query_form'] = PriceQueryForm()
     return render(request, template_name='order_management/home.html', context=context)
 
 
@@ -146,7 +122,7 @@ def price_query_login_form_view(request):
                 order_processing_dates = OrderProcessingDate.objects.create(order=order,
                                                                             status=order.status)
                 print("------------"+user.phone_number)
-                return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id': user.id}))
+                return HttpResponseRedirect(reverse('user-dashboard'))
             else:
                 context['message'] = "Email or Password didn't match"
     price_query_signup_form = PriceQuerySignUpForm()
@@ -157,7 +133,6 @@ def price_query_login_form_view(request):
 
 def price_query_signup_form_view(request):
     """View function for signup with price query"""
-    print("Helooooooooooooooooo")
     context = {}
     price_query_signup_form = PriceQuerySignUpForm()
     if request.method == 'POST':
@@ -185,13 +160,33 @@ def price_query_signup_form_view(request):
                                          user=user)
             order_processing_dates = OrderProcessingDate.objects.create(order=order,
                                                                         status=order.status)
-            return HttpResponseRedirect(reverse('user-dashboard', kwargs={'user_id': user.id}))
+            return HttpResponseRedirect(reverse('user-dashboard'))
     else:
         price_query_signup_form = PriceQuerySignUpForm()
     price_query_login_form = PriceQueryLoginInForm()
     context['price_query_login_form'] = price_query_login_form
     context['price_query_signup_form'] = price_query_signup_form
     return render(request, 'order_management/home.html', context)
+
+
+@login_required
+def price_query_for_loggedIn_user_form_view(request):
+    """View function loggedIn User"""
+    context = {}
+    user = request.user
+    if request.method == 'POST':
+        form = PriceQueryForm(request.POST)
+        if form.is_valid():
+            product_url = form.cleaned_data.get('product_url')
+            customer_note = form.cleaned_data.get('customer_note')
+            new_order = Order.objects.create(product_url=product_url,
+                                             customer_note=customer_note,
+                                             user=user)
+            new_order_processing_dates = \
+                OrderProcessingDate.objects.create(order=new_order,
+                                                   status=new_order.status)
+            context['message'] = "Submitted Successfully"
+            return HttpResponseRedirect(reverse('user-dashboard'))
 
 
 class AdminDashBoardView(LoginRequiredMixin, IsStaffMixin, TemplateView):

@@ -37,7 +37,7 @@ urlpatterns = [
     path('', homepage, name='home'),
     path('price_query_and_login', price_query_login_form_view, name='price-query-and-login'),
     path('price_query_and_signup', price_query_signup_form_view, name='price-query-and-signup'),
-    path('user_dashboard/<int:user_id>', user_dashboard, name='user-dashboard'),
+    path('user_dashboard/', user_dashboard, name='user-dashboard'),
     path('user_dashboard/order/<int:primary_key>', user_order_detail_view, name='user-order-detail'),
 
 
