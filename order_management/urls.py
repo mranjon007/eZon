@@ -7,6 +7,7 @@ from .views import (
 
     user_dashboard,
     user_order_detail_view,
+    price_query_for_loggedIn_user_form_view,
 
     PriceQueryListView,
     update_price_query,
@@ -38,6 +39,7 @@ urlpatterns = [
     path('price_query_and_login', price_query_login_form_view, name='price-query-and-login'),
     path('price_query_and_signup', price_query_signup_form_view, name='price-query-and-signup'),
     path('user_dashboard/', user_dashboard, name='user-dashboard'),
+    path('price_query_for_loggedin_user/', price_query_for_loggedIn_user_form_view, name='price-query-for-loggedin-user'),
     path('user_dashboard/order/<int:primary_key>', user_order_detail_view, name='user-order-detail'),
 
 
