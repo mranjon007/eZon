@@ -1,6 +1,5 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Row, Column
 from .models import (
     COMPANY_LISTING,
     COUNTRY_LIST,
@@ -73,20 +72,6 @@ class PriceQueryLoginInForm(forms.Form):
     password1 = forms.CharField(label=_("Password"),
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
 
-    # def clean_email_address(self):
-    #     data = self.cleaned_data['email_address']
-    #
-    #     # Check if email is not in the past.
-    #     if data < datetime.datel.today():
-    #         raise ValidationError(_('Invalid date - renewal in past'))
-    #
-    #     # Check if a date is in the allowed range (+4 weeks from today).
-    #     if data > datetime.date.today() + datetime.timedelta(weeks=4):
-    #         raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
-
-        # # Remember to always return the cleaned data.
-        # return data
-
 
 class PriceQueryForm(forms.Form):
     product_url = forms.URLField(max_length=300, required=True, initial='https://')
@@ -147,18 +132,6 @@ class PlaceOrderForm(forms.Form):
     customer_email_address = forms.CharField(max_length=80)
     customer_address = forms.CharField(max_length=300)
     customer_note = forms.CharField(max_length=500, widget=forms.Textarea, required=False)
-
-    # def clean_customer_email_address(self):
-    #     email = self.cleaned_data['customer_email_address']
-    #     if CustomUser.objects.get(email=email):
-    #         raise ValidationError(_("this email is already exist"))
-    #     # Remember to always return the cleaned data.
-    #     return email
-    #
-    # def clean_customer_phone_number(self):
-    #     phone_number = self.cleaned_data['customer_phone_number']
-    #     if CustomUser.objects.filter(phone_number=phone_number):
-    #         raise ValidationError(_('this phone number is already exist'))
 
 
 class ProductPurchaseForm(forms.Form):
