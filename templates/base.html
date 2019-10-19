@@ -164,18 +164,18 @@
 
   <script>
     $(function() {
-      var typed = new Typed("#id_product_url", {
-        strings: ['Paste Product Url ', 'Paste Product Url (ex: https://amazon.com/XXX)', 'Paste Product Url (ex: https://bestbuy.com/XXX)', 'Paste Product Url (ex: https://example.com/XXX)'],
-        attr: 'placeholder',
-        typeSpeed: 40,
-        loop: true
-      });
+      // var typed = new Typed("#id_product_url", {
+      //   strings: ['Paste Product Url ', 'Paste Product Url (ex: https://amazon.com/XXX)', 'Paste Product Url (ex: https://bestbuy.com/XXX)', 'Paste Product Url (ex: https://example.com/XXX)'],
+      //   attr: 'placeholder',
+      //   typeSpeed: 40,
+      //   loop: true
+      // });
 
       // focus cursor on page load
       $('[name="product_url"]').focus();
       
       // home login signup query
-      var price_query_form = $('#price_query_form');
+      var price_query_form = $('#price_query_form_home');
       $('#toggle-event').change(function() {
         acc_status = $(this).prop('checked');
         if(acc_status === false) {

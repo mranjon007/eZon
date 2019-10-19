@@ -24,7 +24,7 @@
               <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-fw fa-search-dollar"></i> Submit Query</button>
             </form>
             {% else %}
-              <form id="price_query_form" method="post" action="{% url 'price-query-and-signup' %}">
+              <form id="price_query_form_home" method="post" action="{% url 'price-query-and-signup' %}">
                 {% csrf_token %}
 
                 <div class="form-group">
