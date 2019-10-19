@@ -103,7 +103,7 @@ class Order(models.Model):
     # product_category should be added later
 
     class Meta:
-        ordering = ['id']
+        ordering = ['-id']
 
     def get_order_number(self):
         return str(self.id + 1000)  # 1000 + id number

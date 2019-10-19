@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% block title %} Verify Your Phone Number {% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
     {% load crispy_forms_tags %}
 
     <h2>Verify Phone Number</h2>
@@ -11,5 +13,37 @@
     </form>
     <a href="{% url 'verify-phone-number' user_id=user.id%}" class="btn btn-primary">Send code again</a>
     <h3 STYLE="color:red">{{ message }}</h3>
+=======
+<div class="container">
+  <div class="row  h-360">
+    
+    <div class="col-12 col-md-6 my-auto shadow-lg p-3 mb-5 bg-white rounded">
+      
+      {% if message %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ message }} 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+      <form id="price_query_form" method="post" action="{% url 'price-query-and-signup' %}">
+        {% load crispy_forms_tags %}
+        {% csrf_token %}
+        <div class="form-group row">
+          <div class="col-sm-8  mb-sm-0">
+            {{ form.verification_code|as_crispy_field }}
+          </div>
+          <div class="col my-auto">
+            <button type="submit" class="submit_query btn btn-primary btn-block"><i class="fas fa-fw fa-redo"></i> Send Again</button>
+          </div>
+        </div>
+        <button type="submit" class="submit_query btn btn-primary btn-block"> Submit</button>
+      </form>
+      
+    </div>
+  </div>
+</div>
+>>>>>>> 4af189271df6176e256fbba220d2f5c438fc25fb
 
 {% endblock %}
