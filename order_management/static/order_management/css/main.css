@@ -52,6 +52,19 @@ body {
     }
 }
 
+.bg-register-image {
+    background: url('/static/order_management/img/signup.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.bg-login-image {
+    background: url('/static/order_management/img/login.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 /* Footer */
 footer {
     background-color: #EFF2F5;

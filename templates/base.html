@@ -40,18 +40,16 @@
           </button>
       
           <div class="navbar-collapse collapse" id="navbarsExample07" style="">
-            <ul class="navbar-nav ml-lg-auto">
-              <li class="nav-item active">  
-                <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-fw fa-home"></i> Home <span class="sr-only">(current)</span></a>
-              </li>
+            <ul class="navbar-nav ml-lg-auto"> 
               {% if user.is_authenticated %} 
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.name }}</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown07">
                   {% if user %} 
                   
-                  <a class="dropdown-item" href="{% url 'user-dashboard' user_id=user.id %}"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
-                  <a class="dropdown-item" href="{% url 'user-profile' %}"><i class="fas fa-fw fa-user-circle"> </i>Profile</a>
+                  <a class="dropdown-item" href="{% url 'user-dashboard' %}"><i class="fas fa-fw fa-align-left"></i> My Requests</a>
+                  <a class="dropdown-item" href="{% url 'user-profile' %}"><i class="fas fa-fw fa-user-circle"> </i> My Profile</a>
+                  <a class="dropdown-item" href="#"><i class="fas fa-fw fa-bell"></i> My Notifications</a>
                   {% endif %}
                   
                   <div class="dropdown-divider"></div>

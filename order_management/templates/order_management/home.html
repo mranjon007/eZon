@@ -16,45 +16,53 @@
             </button>
           </div>
           {% endif %}
-          <div>
-            <form id="price_query_form" method="post" action="{% url 'price-query-and-signup' %}">
+          <div class="query_signup_in_form">
+            {% if user.is_authenticated %}
+            <form method="post">
               {% csrf_token %}
-  
-              <div class="form-group">
-                {{ price_query_signup_form.product_url|as_crispy_field }}
-              </div>
-
-              <div class="form-group">
-                <input id="toggle-event" type="checkbox" checked data-toggle="toggle" data-on="<i class='fa fa-user-plus'></i> I don't have an Account" data-off="<i class='fa fa-sign-in-alt'></i> I already have an Account" 
-                data-width="100%" data-height="30" data-onstyle="outline-secondary" data-offstyle="outline-secondary">
-              </div>
-  
-              <div class="sign_up_form">
-                <div class="form-group">
-                  {{ price_query_signup_form.name|as_crispy_field }}
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    {{ price_query_signup_form.email|as_crispy_field }}
-                  </div>
-                  <div class="form-group col-md-6">
-                    {{ price_query_signup_form.phone_number|as_crispy_field }}
-                  </div> 
-                  <div class="form-group col-md-6">
-                    {{ price_query_signup_form.password1|as_crispy_field }}
-                  </div>
-                  <div class="form-group col-md-6">
-                    {{ price_query_signup_form.password2|as_crispy_field }}
-                  </div>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                {{ price_query_signup_form.customer_note|as_crispy_field }}
-              </div>
-        
-              <button type="submit" class="submit_query btn btn-primary btn-block"><i class="fas fa-fw fa-search-dollar"></i> Submit Query</button>
+              {{ price_query_form|crispy }}
+              <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-fw fa-search-dollar"></i> Submit Query</button>
             </form>
+            {% else %}
+              <form id="price_query_form" method="post" action="{% url 'price-query-and-signup' %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                  {{ price_query_signup_form.product_url|as_crispy_field }}
+                </div>
+
+                <div class="form-group">
+                  <input id="toggle-event" type="checkbox" checked data-toggle="toggle" data-on="<i class='fa fa-user-plus'></i> I don't have an Account" data-off="<i class='fa fa-sign-in-alt'></i> I already have an Account" 
+                  data-width="100%" data-height="30" data-onstyle="outline-secondary" data-offstyle="outline-secondary">
+                </div>
+
+                <div class="sign_up_form">
+                  <div class="form-group">
+                    {{ price_query_signup_form.name|as_crispy_field }}
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      {{ price_query_signup_form.email|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                      {{ price_query_signup_form.phone_number|as_crispy_field }}
+                    </div> 
+                    <div class="form-group col-md-6">
+                      {{ price_query_signup_form.password1|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                      {{ price_query_signup_form.password2|as_crispy_field }}
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  {{ price_query_signup_form.customer_note|as_crispy_field }}
+                </div>
+          
+                <button type="submit" class="submit_query btn btn-primary btn-block"><i class="fas fa-fw fa-search-dollar"></i> Submit Query</button>
+              </form>
+            {% endif %}
           </div>
           
         </div>
